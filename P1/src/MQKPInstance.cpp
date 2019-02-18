@@ -127,6 +127,8 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 
 	int i, j;
 	for(i=0; i<getNumObjs() - 1; i++){
+		getline(file, dummie, ' ');
+		getline(file, dummie, ' ');
 		for(j=i+1; j < getNumObjs() - 1; j++){
 			getline(file, dummie, '\t');
 			_profits[0][i][j]= _profits[0][j][i] = stoi(dummie);
@@ -138,6 +140,7 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 	}
 
 
+	exit(-1);
 	getline(file, dummie, '\n');
 	getline(file, dummie, '\n');
 	getline(file, dummie, '\n');
@@ -149,7 +152,7 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 		sumWeights += (_weights[0][k] = stoi(dummie));
 		std::cout << stoi(dummie) << std::endl;
 	}
-	exit(-1);
+
 	getline(file, dummie, '\n');
 	sumWeights += (_weights[0][k] = stoi(dummie));
 
