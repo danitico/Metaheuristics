@@ -112,12 +112,13 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 
 	getline(file, dummie, '\n');
 	_numObjs = stoi(dummie);
+	_numKnapsacks=numKnapsacks;
 
 	_profits->resize(getNumObjs(), std::vector<int>(getNumObjs(), 0));
 	_weights->resize(getNumObjs());
 
 	for (int i = 0; i < getNumObjs() - 1; ++i) {
-		getline(file, dummie, ' ');
+		getline(file, dummie, '\t');
 		_profits[0][i][i]= stoi(dummie);
 	}
 
@@ -125,30 +126,36 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 	_profits[0][getNumObjs() - 1][getNumObjs() - 1]= stoi(dummie);
 
 	int i, j;
-	for(i=0; i<getNumObjs(); i++){
-		for(j=i+1; j < getNumObjs(); j++){
-			getline(file, dummie, ' ');
+	for(i=0; i<getNumObjs() - 1; i++){
+		for(j=i+1; j < getNumObjs() - 1; j++){
+			getline(file, dummie, '\t');
 			_profits[0][i][j]= _profits[0][j][i] = stoi(dummie);
+			std::cout << stoi(dummie) << " ";
 		}
 		getline(file, dummie, '\n');
 		_profits[0][i][j]= _profits[0][j][i] = stoi(dummie);
+		std::cout << stoi(dummie) << "\n";
 	}
+
 
 	getline(file, dummie, '\n');
 	getline(file, dummie, '\n');
 	getline(file, dummie, '\n');
 
 	int k, sumWeights=0;
+	std::cout << "hahahaha";
 	for(k=0; k < getNumObjs() - 1; k++){
 		getline(file, dummie, ' ');
 		sumWeights += (_weights[0][k] = stoi(dummie));
-
+		std::cout << stoi(dummie) << std::endl;
 	}
+	exit(-1);
 	getline(file, dummie, '\n');
 	sumWeights += (_weights[0][k] = stoi(dummie));
 
 	int capacity = (0.8*sumWeights)/numKnapsacks;
 	_capacities->resize(numKnapsacks + 1, capacity);
+
 
 	/*
 	 * Complete this function:
