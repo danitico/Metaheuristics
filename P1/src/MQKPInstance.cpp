@@ -72,14 +72,27 @@ double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
 double MQKPInstance::getSumProfits(MQKPSolution &solution) {
 
 	double sumProfits = 0.;
-	for(int i=1; i<=getNumKnapsacks(); i++){
+	std::vector<std::vector <int> > matrixAux(getNumKnapsacks(), std::vector<int>(0,0));
 
+	for(int i=0; i<getNumObjs(); i++){
+		if(solution.whereIsObject(i) > 0){
+			matrixAux[solution.whereIsObject(i)].push_back(i);
+		}
 	}
 
-	/*TODO Complete
+	for(int j=0; j<getNumKnapsacks(); j++){
+		for(unsigned int k=0; k<matrixAux[j].size(); k++){
+			sumProfits += this->getElementProfit(k, k);
+			for(unsigned int k1=k+1; k1<matrixAux[j].size(); k1++){
+				sumProfits += this->getElementProfit(k, k1);
+			}
+		}
+	}
+
+	/* Complete
 	 * Double loop for each pair of objects
-	 * Todo object included in any knapsack (> 0) must sum its individual profit.
-	 * Todo pair of objects included in the same knapsack (and with value > 0) must sum its shared profit.
+	 * object included in any knapsack (> 0) must sum its individual profit.
+	 * pair of objects included in the same knapsack (and with value > 0) must sum its shared profit.
 	 *      IMPORTANT NOTE, sum the pair (i,j) only once, that is, if you sum (i, j), you should not sum (j, i)
 	 */
 
