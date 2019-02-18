@@ -11,13 +11,27 @@
 
 #include "MQKPInstance.h"
 #include "MQKPSolution.h"
+#include <fstream>
+#include <cstdlib>
+#include <iostream>
+#include <string>
 
 MQKPInstance::MQKPInstance() {
-	//TODO complete initializing the properties
+	_numKnapsacks=0;
+	_numObjs=0;
+	_profits = new std::vector<std::vector<int> >;
+	_profits->resize(0, std::vector<int>(0));
+
+	_capacities = new std::vector<int>;
+	_capacities->resize(0, 0);
+	_weights = new std::vector<int>;
+	_weights->resize(0, 0);
 }
 
 MQKPInstance::~MQKPInstance() {
-	//TODO complete
+	delete _profits;
+	delete _capacities;
+	delete _weights;
 }
 
 double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
@@ -29,8 +43,11 @@ double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
 	}
 
 	for (int i = 0; i < this->_numObjs; i++) {
-
-		/*TODO Complete
+		int whichknapsack = solution.whereIsObject(i);
+		if(whichknapsack > 0){
+			sumWeights[whichknapsack] += _weights[0][i];
+		}
+		/*Complete
 		 * 1. Obtain the knapsack where we can find the i-th object.
 		 * 2. If it is a valid knapsack (higher than 0), increment sumWeights by the weight of the object.
 		 */
@@ -39,8 +56,10 @@ double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
 	double maxCapacityViolation = 0; //We initialize maximum violation to 0, meaning that there are no violations.
 
 	for (int j = 1; j <= this->_numKnapsacks; j++) {
-
-		/*TODO Complete
+		if(sumWeights[j] - _capacities[0][j] > maxCapacityViolation){
+			maxCapacityViolation = sumWeights[j] - _capacities[0][j];
+		}
+		/*Complete
 		 * 1. Obtain the violation for the j-th knapsack
 		 * 2. Update maxCapacityViolation if needed
 		 */
@@ -53,6 +72,9 @@ double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
 double MQKPInstance::getSumProfits(MQKPSolution &solution) {
 
 	double sumProfits = 0.;
+	for(int i=1; i<=getNumKnapsacks(); i++){
+
+	}
 
 	/*TODO Complete
 	 * Double loop for each pair of objects
@@ -66,10 +88,60 @@ double MQKPInstance::getSumProfits(MQKPSolution &solution) {
 
 void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 
+	std::ifstream file(filename);
+	if(! file.is_open()){
+		std::cout << "The file does not exist" << std::endl;
+		exit(-1);
+	}
+
+	std::string dummie;
+	getline(file, dummie, '\n');
+
+	getline(file, dummie, '\n');
+	_numObjs = stoi(dummie);
+
+	_profits->resize(getNumObjs(), std::vector<int>(getNumObjs(), 0));
+	_weights->resize(getNumObjs());
+
+	for (int i = 0; i < getNumObjs() - 1; ++i) {
+		getline(file, dummie, ' ');
+		_profits[0][i][i]= stoi(dummie);
+	}
+
+	getline(file, dummie, '\n');
+	_profits[0][getNumObjs() - 1][getNumObjs() - 1]= stoi(dummie);
+
+	int i, j;
+	for(i=0; i<getNumObjs(); i++){
+		for(j=i+1; j < getNumObjs(); j++){
+			getline(file, dummie, ' ');
+			_profits[0][i][j]= _profits[0][j][i] = stoi(dummie);
+		}
+		getline(file, dummie, '\n');
+		_profits[0][i][j]= _profits[0][j][i] = stoi(dummie);
+	}
+
+	getline(file, dummie, '\n');
+	getline(file, dummie, '\n');
+	getline(file, dummie, '\n');
+
+	int k, sumWeights=0;
+	for(k=0; k < getNumObjs() - 1; k++){
+		getline(file, dummie, ' ');
+		sumWeights += (_weights[0][k] = stoi(dummie));
+
+	}
+	getline(file, dummie, '\n');
+	sumWeights += (_weights[0][k] = stoi(dummie));
+
+	int capacity = (0.8*sumWeights)/numKnapsacks;
+	_capacities->resize(numKnapsacks + 1, capacity);
+
 	/*
-	 * TODO Complete this function:
-	 *   1. read the number of objects
-	 *   2. allocate matrix and vector memory
+	 * Complete this function:
+	 *   1. read
+	 *   the number of objects
+	 *   2. allocate matrix and vector getNumObjs() - 1memory
 	 *   3. read profits and object weights, according to what has been previously discussed
 	 *   4. Obtain the capacities of the knapsacks:
 	 *      . Sum all the object weights

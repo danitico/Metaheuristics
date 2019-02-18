@@ -20,6 +20,7 @@ class MQKPInstance;
 
 #include <time.h>
 #include <stdlib.h>
+#include <vector>
 
 /**
  * Class representing a solution of the problem.
@@ -30,7 +31,10 @@ class MQKPInstance;
  */
 class MQKPSolution {
 protected:
-	/*TODO Define the properties of the class
+	std::vector<int> _sol;
+	int _numObjs;
+	double _fitness;
+	/* Define the properties of the class
 	 * _sol Integer vector, which will be the internal representation of the solution.
 	 * _numObjs Integer with the number of objects of the problem.
 	 * _fitness double value with quality of the solution.

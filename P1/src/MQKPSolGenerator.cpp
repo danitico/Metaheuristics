@@ -19,7 +19,7 @@ void MQKPSolGenerator::genRandomSol(MQKPInstance &instance, MQKPSolution &soluti
 	int numKnapsacks = instance.getNumKnapsacks();
 
 	for (int i = 0; i < numObjs; i++){
-		int randomKnapsack = rand() % 2;  //TODO Change to select one of the knapsacks
+		int randomKnapsack = (rand() % numKnapsacks) + 1;  //Change to select one of the knapsacks
 		solution.putObjectIn(i, randomKnapsack);
 	}
 }

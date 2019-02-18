@@ -20,20 +20,19 @@ class MQKPSolution;
 
 #include <time.h>
 #include <stdlib.h>
+#include <vector>
+
 
 /**
  * Class for storing the information of an instance of the problem MQKP
  */
 class MQKPInstance {
 protected:
-	/*TODO Define the properties of the class:
-	 * _numKnapsacks Integer with number of knapsacks to consider. This is not read from the file, but established by the user.
-	 * _numObjs Integer with the number of objects of the problem.
-	 * _profits Matrix where the profits of the objects are stored. YOU HAVE TO ALLOCATE ITS MEMORY.
-	 * _weights Vector with the weights of the objects. YOU HAVE TO ALLOCATE ITS MEMORY.
-	 * _capacities Vector with the capacities of the knapsacks. YOU HAVE TO ALLOCATE ITS MEMORY. To avoid problems, store the vector
-	 *             for (1 + numKnapsacks) elements and use the indices from index 1
-	 */
+	int _numKnapsacks;
+	int _numObjs;
+	std::vector<std::vector<int> >* _profits;
+	std::vector<int>* _weights;
+	std::vector<int>* _capacities; //n + 1
 
 public:
 	/**
@@ -52,10 +51,20 @@ public:
 	 * @param[in] numKnapsacks Integer with the number of knapsacks to be considered. This is not read from the file,
 	 *                         but established by the user.
 	 */
-	void readInstance(char *filename, int numKnapsacks);
 
-	//TODO declare the methods (and define them in MQKPInstance.cpp) returning the information about the instance
-	// of the problem. Among others, getNumObjs() and getNumKnapsacks()
+	inline int getNumKnapsacks(){
+		return _numKnapsacks;
+	}
+
+	inline int getNumObjs(){
+		return _numObjs;
+	}
+
+	inline int getElementProfit(int fila, int columna){
+		return _profits[0][fila][columna];
+	}
+
+	void readInstance(char *filename, int numKnapsacks);
 
 	/**
 	 * Function returning how much the capacity constraint is is violated for the most over-weighted knapsack.
