@@ -287,7 +287,7 @@ int main(int argc, char **argv) {
 
 	for (unsigned int iIteration = 0; iIteration < overallMaxNumResults; iIteration++){
 		for (unsigned int iInstance = 0; iInstance < numInstances; iInstance++){
-			cout << meanResults.at(iInstance)->at(iIteration).best << "\t";
+			cout <<iIteration<<"\t"<< meanResults.at(iInstance)->at(iIteration).best << "\t";
 			cout << meanResults.at(iInstance)->at(iIteration).current << "\t";
 		}
 		cout << endl;

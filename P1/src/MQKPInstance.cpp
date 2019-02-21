@@ -111,7 +111,7 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 	getline(file, dummie, '\n');
 
 	getline(file, dummie, '\n');
-	_numObjs = stoi(dummie);
+	_numObjs = atoi(dummie.c_str());
 	_numKnapsacks=numKnapsacks;
 
 	_profits->resize(getNumObjs(), std::vector<int>(getNumObjs(), 0));

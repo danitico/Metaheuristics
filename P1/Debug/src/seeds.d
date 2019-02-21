@@ -1,1 +1,1 @@
-src/seeds.o: ../src/seeds.cpp
+src/seeds.d: ../src/seeds.cpp
