@@ -42,16 +42,22 @@ double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
 		sumWeights[j] = 0;
 	}
 
+	/*Complete
+	 * 1. Obtain the knapsack where we can find the i-th object.
+	 * 2. If it is a valid knapsack (higher than 0), increment sumWeights by the weight of the object.
+	 */
+
 	for (int i = 0; i < this->_numObjs; i++) {
 		int whichknapsack = solution.whereIsObject(i);
 		if(whichknapsack > 0){
 			sumWeights[whichknapsack] += _weights[0][i];
 		}
-		/*Complete
-		 * 1. Obtain the knapsack where we can find the i-th object.
-		 * 2. If it is a valid knapsack (higher than 0), increment sumWeights by the weight of the object.
-		 */
 	}
+
+	/*Complete
+	 * 1. Obtain the violation for the j-th knapsack
+	 * 2. Update maxCapacityViolation if needed
+	 */
 
 	double maxCapacityViolation = 0; //We initialize maximum violation to 0, meaning that there are no violations.
 
@@ -59,10 +65,6 @@ double MQKPInstance::getMaxCapacityViolation(MQKPSolution &solution) {
 		if(sumWeights[j] - _capacities[0][j] > maxCapacityViolation){
 			maxCapacityViolation = sumWeights[j] - _capacities[0][j];
 		}
-		/*Complete
-		 * 1. Obtain the violation for the j-th knapsack
-		 * 2. Update maxCapacityViolation if needed
-		 */
 	}
 
 	delete[] sumWeights;
@@ -89,14 +91,14 @@ double MQKPInstance::getSumProfits(MQKPSolution &solution) {
 		}
 	}
 
+	return sumProfits;
+
 	/* Complete
 	 * Double loop for each pair of objects
 	 * object included in any knapsack (> 0) must sum its individual profit.
 	 * pair of objects included in the same knapsack (and with value > 0) must sum its shared profit.
 	 *      IMPORTANT NOTE, sum the pair (i,j) only once, that is, if you sum (i, j), you should not sum (j, i)
 	 */
-
-	return sumProfits;
 }
 
 void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
@@ -109,12 +111,12 @@ void MQKPInstance::readInstance(char *filename, int numKnapsacks) {
 
 	std::string dummie;
 	getline(file, dummie, '\n');
-
 	getline(file, dummie, '\n');
+
 	_numObjs = atoi(dummie.c_str());
 	_numKnapsacks=numKnapsacks;
 
-	_profits->resize(getNumObjs(), std::vector<int>(getNumObjs(), 0));
+	_profits->resize(getNumObjs(),std::vector<int>(getNumObjs(),0));
 	_weights->resize(getNumObjs());
 
 	for (int i = 0; i < getNumObjs(); ++i) {

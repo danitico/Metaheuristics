@@ -13,13 +13,13 @@
 #include "MQKPInstance.h"
 #include "MQKPSolution.h"
 
-void MQKPSolGenerator::genRandomSol(MQKPInstance &instance, MQKPSolution &solution){
+void MQKPSolGenerator::genRandomSol(MQKPInstance &instance,MQKPSolution &solution){
 
 	int numObjs = instance.getNumObjs();
 	int numKnapsacks = instance.getNumKnapsacks();
 
 	for (int i = 0; i < numObjs; i++){
-		int randomKnapsack = (rand() % (numKnapsacks)) ;  //Change to select one of the knapsacks
+		int randomKnapsack = (rand() % (numKnapsacks)) ;
 		solution.putObjectIn(i, randomKnapsack);
 	}
 }
