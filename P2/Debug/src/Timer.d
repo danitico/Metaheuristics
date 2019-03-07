@@ -1,4 +1,4 @@
-src/Timer.d: ../src/Timer.cpp \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/Timer.h
+src/Timer.o: ../src/Timer.cpp \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/Timer.h
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/Timer.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/Timer.h:

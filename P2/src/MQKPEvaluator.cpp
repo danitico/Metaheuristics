@@ -43,8 +43,32 @@ double MQKPEvaluator::computeDeltaFitness(MQKPInstance& instance,
 
 	_numEvaluations++;
 
+	double currentMaxViolation = instance.getMaxCapacityViolation(solution);
+	double deltaMaxCapacityViolation = instance.getDeltaMaxCapacityViolation(solution,indexObject, indexKnapsack);
+	double newMaxViolation =  currentMaxViolation + deltaMaxCapacityViolation;
+
+	double currentSumProfits = instance.getSumProfits(solution);
+	double deltaSumProfits = instance.getDeltaSumProfits(solution, indexObject, indexKnapsack);
+	double newSumProfits = currentSumProfits + deltaSumProfits;
+
+	if(currentMaxViolation == 0 && newMaxViolation == 0){
+		return deltaSumProfits;
+	}
+
+	if(currentMaxViolation > 0 && newMaxViolation > 0){
+		return -deltaMaxCapacityViolation;
+	}
+
+	if(currentMaxViolation > 0 && newMaxViolation < 0){
+		return newSumProfits - deltaMaxCapacityViolation;
+	}
+
+	if(newMaxViolation > 0 && currentMaxViolation < 0){
+		return - currentSumProfits - newMaxViolation;
+	}
+
 	/**
-	 * TODO
+	 *
 	 * Given that the fitness depends on the violation of the capacities of the knapsack,
 	 * you should obtain current (maximum) violation and the possible new violation, together
 	 * with the possible change in the sum of profits.

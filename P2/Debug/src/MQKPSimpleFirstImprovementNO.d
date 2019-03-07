@@ -1,29 +1,29 @@
-src/MQKPSimpleFirstImprovementNO.d: \
+src/MQKPSimpleFirstImprovementNO.o: \
  ../src/MQKPSimpleFirstImprovementNO.cpp \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPSimpleFirstImprovementNO.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPNeighExplorer.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPSolution.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPInstance.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPInstance.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPChangeOperation.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPEvaluator.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPSolution.h \
- /home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPObjectAssignmentOperation.h
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPSimpleFirstImprovementNO.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPNeighExplorer.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPSolution.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPInstance.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPInstance.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPChangeOperation.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPEvaluator.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPSolution.h \
+ /home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPObjectAssignmentOperation.h
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPSimpleFirstImprovementNO.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPSimpleFirstImprovementNO.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPNeighExplorer.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPNeighExplorer.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPSolution.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPSolution.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPInstance.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPInstance.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPInstance.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPInstance.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPChangeOperation.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPChangeOperation.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPEvaluator.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPEvaluator.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPSolution.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPSolution.h:
 
-/home/pedroa/Escritorio/TOSHIBAHD/Docencia/curso18-19/MH/workspace/P2Metaheuristics/src/include/MQKPObjectAssignmentOperation.h:
+/home/daniel/Desktop/TERCERO_CARRERA/Metaheuristics/P2/src/include/MQKPObjectAssignmentOperation.h:
