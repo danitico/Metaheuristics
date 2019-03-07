@@ -228,13 +228,29 @@ double MQKPInstance::getDeltaSumProfits(MQKPSolution& solution, int indexObject,
 		int indexKnapsack) {
 
 	double deltaSumProfits = 0;
-
-	/* TODO
+	int oldKnapsack=solution.whereIsObject(indexObject);
+	if(oldKnapsack!=0){
+		deltaSumProfits-=this->getProfit(indexObject);
+		for(int i=0;i<this->getNumObjs();i++){
+			if( (i!=indexObject)  &&  (oldKnapsack==solution.whereIsObject(i)) ){
+				deltaSumProfits-=this->getProfit(i,indexObject);
+			}
+		}
+	}
+	/*
 	 * If the object was in a knapsack, substract its individual profit from deltaSumProfits and
 	 * substract the profit shared with any other object allocated in the same knapsack
 	 */
+	if(indexKnapsack!=0){
+		deltaSumProfits+=this->getProfit(indexObject);
+		for(int i=0; i<this->getNumObjs(); i++){
+			if( (i!=indexObject)  &&  (indexKnapsack==solution.whereIsObject(i)) ){
+				deltaSumProfits+=this->getProfit(i,indexObject);
+			}
+		}
+	}
 
-	/* TODO
+	/*
 	 * If the object is going to be included in a knapsack, sum its individual profit to
 	 * deltaSumProfits and also sum the profit shared with any other object in the same knapsack
 	 */
