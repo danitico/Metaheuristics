@@ -58,7 +58,7 @@ bool MQKPSimpleBestImprovementNO::findOperation(MQKPInstance& instance,
 	}
 	if (bestDeltaFitness>0) return true;
 	else return false;
-	/* TODO
+	/*
 	 * 1. For each object of the problem (iterating them in the order defined by perm)
 	 *   a. For each knapsack of the problem (Note: do not forget any of them)
 	 *     i. Obtain the value deltaFitness obtained from assign this object to the knapsack in the solution
