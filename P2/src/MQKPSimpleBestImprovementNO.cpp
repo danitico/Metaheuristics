@@ -35,6 +35,29 @@ bool MQKPSimpleBestImprovementNO::findOperation(MQKPInstance& instance,
 	bool initialised = false;
 	double bestDeltaFitness = 0;
 
+	for( int i=0;i<numObjs;i++)
+	{
+		int objIndex=perm[i];
+		for(int j=0;j<numKnapsacks+1;j++)
+		{
+			double deltaFitness = MQKPEvaluator::computeDeltaFitnessMQKPEvaluator(instance, solution,objIndex, j);
+			if(initialised==false )
+			{
+				initialised=true;
+				bestDeltaFitness=deltaFitness;
+				oaOperation->setValues(objIndex,j,deltaFitness);
+				oaOperation->apply(solution);
+			}
+			else if(deltaFitness>bestDeltaFitness)
+			{
+				bestDeltaFitness=deltaFitness;
+				oaOperation->setValues(objIndex,j,deltaFitness);
+				oaOperation->apply(solution);
+			}
+		}
+	}
+	if (bestDeltaFitness>0) return true;
+	else return false;
 	/* TODO
 	 * 1. For each object of the problem (iterating them in the order defined by perm)
 	 *   a. For each knapsack of the problem (Note: do not forget any of them)

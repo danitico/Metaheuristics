@@ -216,12 +216,20 @@ double MQKPInstance::getProfit(int o1, int o2){
 }
 
 void MQKPInstance::randomPermutation(int size, vector<int>& perm) {
+	perm.clear();
+	for( int i=0;i<size;i++)
+		{
+		perm[i]=i;
+		}
+	for( int i=0;i<size;i++)
+		{
+			int num = rand()%(size-1);
+			int tmp= perm[i];
+			perm[i]=perm[num];
+			perm[num]=tmp;
+		}
+	return;
 
-	/** TODO
-	 * 1. Empty the array perm
-	 * 2. Fill it with identity permutation
-	 * 3. Iterate over it, interchanging each element with other randomly selected
-	 */
 }
 
 double MQKPInstance::getDeltaSumProfits(MQKPSolution& solution, int indexObject,
@@ -245,12 +253,12 @@ double MQKPInstance::getDeltaSumProfits(MQKPSolution& solution, int indexObject,
 double MQKPInstance::getDeltaMaxCapacityViolation(MQKPSolution& solution,
 		int indexObject, int indexKnapsack) {
 
-	/** TODO
-	 * 1. Obtain the knapsack where the object is
-	 * 2. Obtain the maximum capacity violation of the current solution
-	 * 3. Assign the object to the new knapsack in the solution
-	 * 4. Obtain the new maximum capacity violation
-	 * 5. Undo the previous change, keeping the object in the knapsack where it was included before step 3
-	 * 6. Return the difference (new violation - current violation)
-	 */
+	int knapsack=solution.whereIsObject(indexObject);
+	double curMaxCapacityViolation=this->getMaxCapacityViolation(solution);
+	solution.putObjectIn(indexObject,indexKnapsack);
+	double newMaxCapacityViolation=this->getMaxCapacityViolation(solution);
+	solution.putObjectIn(indexObject,knapsack);
+	double deltaMaxCapacityViolation=newMaxCapacityViolation - curMaxCapacityViolation;
+	return deltaMaxCapacityViolation;
+
 }
