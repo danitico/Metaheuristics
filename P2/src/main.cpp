@@ -70,8 +70,13 @@ void runALSExperiment(vector<double> &currentResults,
 			&& MQKPEvaluator::getNumEvaluations() < MAX_SOLUTIONS_PER_RUN &&
 			numInitialSolutions < MAX_INITIAL_SOLUTIONS) {
 
+		MQKPSolution aux(instance);
+		MQKPSolGenerator().genRandomSol(instance, aux);
+
+		currentFitness = aux.getFitness();
+
 		/*
-		 * TODO - Generate a new random solution in initialSolution
+		 * 		- Generate a new random solution in initialSolution
 		 *      - Obtain its current fitness
 		 *      - Set currentFitness to the solution
 		 */
@@ -80,8 +85,9 @@ void runALSExperiment(vector<double> &currentResults,
 		bestSoFarResults.push_back(
 				max(bestSoFarResults.back(), currentFitness));
 
-		//TODO Call to the method optimise of the object ls to optimise the solution
+		//Call to the method optimise of the object ls to optimise the solution
 
+		ls.optimise(instance, explorer, aux);
 
 		//Store the results
 		vector<double> &resultsLS = ls.getResults();
