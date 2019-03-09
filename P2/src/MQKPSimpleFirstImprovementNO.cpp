@@ -30,8 +30,17 @@ bool MQKPSimpleFirstImprovementNO::findOperation(MQKPInstance &instance, MQKPSol
 	int numObjs = instance.getNumObjs();
 	int numKnapsacks = instance.getNumKnapsacks();
 	MQKPInstance::randomPermutation(numObjs, perm);
-
-	/* TODO
+	for(int i=0; i<numObjs; i++){
+		for(int j=0;j<numKnapsacks;j++){
+			double deltaFitness=MQKPEvaluator::computeDeltaFitness(instance,solution,perm[i],j);
+			if(deltaFitness>0){
+				oaOperation->setValues(perm[i],j,deltaFitness);
+				return true;
+			}
+		}
+	}
+	return false;
+	/*
 	 * 1. For each object of the problem (iterating them in the order defined by perm)
 	 *   a. For each knapsack of the problem (Note: do not forget any of them)
 	 *     i. Obtain the value deltaFitness obtained from assign this object to the knapsack in the solution

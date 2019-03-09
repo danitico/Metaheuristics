@@ -29,13 +29,13 @@ void MQKPLocalSearch::optimise(MQKPInstance& instance,
 	MQKPObjectAssignmentOperation operation;
 
 	/** TODO
-	 * 1. Apply once the exploration of the neighbourhood and store whether you have
+	 * 1. Apply once the exploration of the neighborhood and store whether you have
 	 *    been able to improve the solution or not
 	 *
 	 * 2. While you have been able to improve the solution
 	 *   a. Apply the exploration of the change found in the previous exploration
 	 *   b. Store the new fitness of the solution in _results
-	 *   c. Apply a new exploration of the neighbourhood
+	 *   c. Apply a new exploration of the neighborhood
 	 */
 
 }

@@ -216,25 +216,53 @@ double MQKPInstance::getProfit(int o1, int o2){
 }
 
 void MQKPInstance::randomPermutation(int size, vector<int>& perm) {
-
-	/** TODO
-	 * 1. Empty the array perm
-	 * 2. Fill it with identity permutation
-	 * 3. Iterate over it, interchanging each element with other randomly selected
+	/*
+	 * clear the vector,
+	 * fill it with the initial indices and interchange them
 	 */
+	perm.clear();
+	for( int i=0;i<size;i++)
+		{
+		perm[i]=i;
+		}
+	for( int i=0;i<size;i++)
+		{
+			int num = rand()%(size-1);
+			int tmp= perm[i];
+			perm[i]=perm[num];
+			perm[num]=tmp;
+		}
+	return;
+
 }
 
 double MQKPInstance::getDeltaSumProfits(MQKPSolution& solution, int indexObject,
 		int indexKnapsack) {
 
 	double deltaSumProfits = 0;
-
-	/* TODO
+	int oldKnapsack=solution.whereIsObject(indexObject);
+	if(oldKnapsack!=0){
+		deltaSumProfits-=this->getProfit(indexObject);
+		for(int i=0;i<this->getNumObjs();i++){
+			if( (i!=indexObject)  &&  (oldKnapsack==solution.whereIsObject(i)) ){
+				deltaSumProfits-=this->getProfit(i,indexObject);
+			}
+		}
+	}
+	/*
 	 * If the object was in a knapsack, substract its individual profit from deltaSumProfits and
 	 * substract the profit shared with any other object allocated in the same knapsack
 	 */
+	if(indexKnapsack!=0){
+		deltaSumProfits+=this->getProfit(indexObject);
+		for(int i=0; i<this->getNumObjs(); i++){
+			if( (i!=indexObject)  &&  (indexKnapsack==solution.whereIsObject(i)) ){
+				deltaSumProfits+=this->getProfit(i,indexObject);
+			}
+		}
+	}
 
-	/* TODO
+	/*
 	 * If the object is going to be included in a knapsack, sum its individual profit to
 	 * deltaSumProfits and also sum the profit shared with any other object in the same knapsack
 	 */
@@ -244,13 +272,30 @@ double MQKPInstance::getDeltaSumProfits(MQKPSolution& solution, int indexObject,
 
 double MQKPInstance::getDeltaMaxCapacityViolation(MQKPSolution& solution,
 		int indexObject, int indexKnapsack) {
-
-	/** TODO
-	 * 1. Obtain the knapsack where the object is
-	 * 2. Obtain the maximum capacity violation of the current solution
-	 * 3. Assign the object to the new knapsack in the solution
-	 * 4. Obtain the new maximum capacity violation
-	 * 5. Undo the previous change, keeping the object in the knapsack where it was included before step 3
-	 * 6. Return the difference (new violation - current violation)
+	/*
+	 * find the knapsack where the object currently is
 	 */
+	int knapsack=solution.whereIsObject(indexObject);
+	/*
+	 * calculate the current capacity violation
+	 */
+	double curMaxCapacityViolation=this->getMaxCapacityViolation(solution);
+	/*
+	 * put the object into a given knapsack
+	 */
+	solution.putObjectIn(indexObject,indexKnapsack);
+	/*
+		 * calculate the new capacity violation
+		 */
+	double newMaxCapacityViolation=this->getMaxCapacityViolation(solution);
+	/*
+	 * return to the original solution
+	 */
+	solution.putObjectIn(indexObject,knapsack);
+	/*
+	 * calculate the difference between the current and the new solution
+	 */
+	double deltaMaxCapacityViolation=newMaxCapacityViolation - curMaxCapacityViolation;
+	return deltaMaxCapacityViolation;
+
 }
