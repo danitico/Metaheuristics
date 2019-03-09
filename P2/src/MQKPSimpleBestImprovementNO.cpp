@@ -40,7 +40,7 @@ bool MQKPSimpleBestImprovementNO::findOperation(MQKPInstance& instance,
 		int objIndex=perm[i];
 		for(int j=0;j<numKnapsacks+1;j++)
 		{
-			double deltaFitness = MQKPEvaluator::computeDeltaFitnessMQKPEvaluator(instance, solution,objIndex, j);
+			double deltaFitness = MQKPEvaluator::computeDeltaFitness(instance, solution,objIndex, j);
 			if(initialised==false )
 			{
 				initialised=true;
