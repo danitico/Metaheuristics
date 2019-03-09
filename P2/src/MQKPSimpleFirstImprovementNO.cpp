@@ -22,7 +22,7 @@ bool MQKPSimpleFirstImprovementNO::findOperation(MQKPInstance &instance, MQKPSol
 	MQKPObjectAssignmentOperation *oaOperation = dynamic_cast<MQKPObjectAssignmentOperation*>(&operation);
 	if (oaOperation == NULL){
 		cerr << "MQKPSimpleBestImprovementNO::findOperation received an operation object of a class different from MQKPObjectAssignmentOperation" << endl;
-		exit(1);
+		exit(-1);
 	}
 
 	//Create a permutation of the indices of the objects and initialize some variables
@@ -31,7 +31,7 @@ bool MQKPSimpleFirstImprovementNO::findOperation(MQKPInstance &instance, MQKPSol
 	int numKnapsacks = instance.getNumKnapsacks();
 	MQKPInstance::randomPermutation(numObjs, perm);
 	for(int i=0; i<numObjs; i++){
-		for(int j=0;j<numKnapsacks;j++){
+		for(int j=0;j<numKnapsacks+1;j++){//knapsacks + 1
 			double deltaFitness=MQKPEvaluator::computeDeltaFitness(instance,solution,perm[i],j);
 			if(deltaFitness>0){
 				oaOperation->setValues(perm[i],j,deltaFitness);

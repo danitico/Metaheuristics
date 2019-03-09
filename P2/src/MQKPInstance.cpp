@@ -221,13 +221,18 @@ void MQKPInstance::randomPermutation(int size, vector<int>& perm) {
 	 * fill it with the initial indices and interchange them
 	 */
 	perm.clear();
+	//we have to initialise it
+	perm.resize(size);
 	for( int i=0;i<size;i++)
 		{
 		perm[i]=i;
 		}
 	for( int i=0;i<size;i++)
 		{
-			int num = rand()%(size-1);
+			int num = rand()%size;
+			//if we put size-1 and we have five elements
+			//that will be rand()%4, that will generate numbers from 0 to 3
+			//so we ignore the index 4 and we can't do it
 			int tmp= perm[i];
 			perm[i]=perm[num];
 			perm[num]=tmp;

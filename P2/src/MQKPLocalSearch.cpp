@@ -27,8 +27,17 @@ void MQKPLocalSearch::optimise(MQKPInstance& instance,
 	_results.clear();
 	_results.push_back(solution.getFitness());
 	MQKPObjectAssignmentOperation operation;
+	explorer.findOperation(instance, solution, operation);
 
-	/** TODO
+	operation.apply(solution);
+	_results.push_back(solution.getFitness());
+
+	while(explorer.findOperation(instance, solution, operation)){
+		operation.apply(solution);
+		_results.push_back(solution.getFitness());
+	}
+
+	/**
 	 * 1. Apply once the exploration of the neighborhood and store whether you have
 	 *    been able to improve the solution or not
 	 *
