@@ -6,9 +6,9 @@
  */
 
 #include "include/MSPSolution.h"
-
-MSPSolution::MSPSolution() {
-	solution_.resize(0);
+#include "include/MSPInstance.h"
+MSPSolution::MSPSolution(const MSPInstance &instance) {
+	solution_.resize(instance.getNumberOfLiterals()+1);
 	// Auto-generated constructor stub
 
 }
