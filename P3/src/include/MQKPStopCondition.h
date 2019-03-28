@@ -43,7 +43,7 @@ public:
 		_maxIterations = 0;
 		_maxTime = 0;
 		_numIterations = 0;
-		_time....; //TODO Reset the variable _time calling to the proper method
+		_time.reset(); //Reset the variable _time calling to the proper method
 	}
 
 	/**
@@ -76,7 +76,7 @@ public:
 		_maxEvaluations = maxEvaluations;
 		_maxIterations = maxIterations;
 		_maxTime = maxTime;
-		_time....; //TODO Reset the variable _time calling to the proper method
+		_time.reset(); //Reset the variable _time calling to the proper method
 	}
 
 	/**

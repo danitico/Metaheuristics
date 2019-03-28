@@ -74,7 +74,7 @@ public:
 	 *         is better than the first, 0 if they cannot be differentiated
 	 */
 	static double compare(double f1, double f2){
-		return (0); //TODO correct the value that has to be returned
+		return f1 - f2; //correct the value that has to be returned
 	}
 
 	/**

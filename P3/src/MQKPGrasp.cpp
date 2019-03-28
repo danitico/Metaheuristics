@@ -38,24 +38,24 @@ void MQKPGrasp::chooseOperation(MQKPObjectAssignmentOperation& operation) {
 	unsigned numTries = ((unsigned)(numObjs * numKnapsacks * _alpha));
 
 	/**
-	 * TODO
+	 *
 	 * Generate random alternatives of object and knapsack (without knapsack 0) and choose
 	 * the alternative leading to better density.
 	 */
 	for (unsigned i = 0; i < numTries; i++) {
-		int indexObj = ...;
-		int indexKnapsack = ...;
+		int indexObj = rand() % numObjs;
+		int indexKnapsack = (rand() % numKnapsacks) + 1;
 
-		double deltaFitness = MQKPEvaluator::computeDel...; //TODO obtain the fitness improvement
-		double density = ...; //TODO obtain the density of the operation (difference of fitness divided by the weight)
+		double deltaFitness = MQKPEvaluator::computeDeltaFitness(*_instance, *_sol, indexObj, indexKnapsack); // obtain the fitness improvement
+		double density = deltaFitness / _instance->getWeight(indexObj); //obtain the density of the operation (difference of fitness divided by the weight)
 
-		//TODO update the best values if they are improved
-		if (... > ... || initialisedBestDensity == false) {
+		//update the best values if they are improved
+		if (density > bestDensity || initialisedBestDensity == false) {
 			initialisedBestDensity = true;
-			bestDensity = ...
-			bestObj = ...
-			bestKnapsack = ...
-			bestDeltaFitness = ...
+			bestDensity = density;
+			bestObj = indexObj;
+			bestKnapsack = indexKnapsack;
+			bestDeltaFitness = deltaFitness;
 		}
 	}
 
@@ -110,17 +110,17 @@ void MQKPGrasp::run(MQKPStopCondition& stopCondition) {
 	}
 
 	/**
-	 * TODO
+	 *
 	 * While the stop condition is not met
 	 *   1. Generate a random solution calling the corresponding method (buildInitialSolution)
 	 *   2. Store the fitness of the solution in _results
 	 *   3. Optimize _sol using a local search and the neighbourhood operator of the metaheuristic
 	 *   4. Update the best so-far solution
 	 */
-	while (...) {
-		bui...
+	while (! stopCondition.reached()) {
+		buildInitialSolution();
 		_results.push_back(_sol->getFitness());
-		_ls.optimise...
+		_ls.optimise(*_instance, _no, *_sol);
 
 		vector<double> &auxResults = _ls.getResults();
 
