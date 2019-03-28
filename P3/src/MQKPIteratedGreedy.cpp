@@ -28,7 +28,7 @@ void MQKPIteratedGreedy::chooseOperation(
 	unsigned numKnapsacks = _instance->getNumKnapsacks();
 
 	/**
-	 * TODO
+	 *
 	 * Iterate over the objects which are not in any knapsack (0)
 	 *   Iterate over all the knapsacks
 	 *     Obtain difference of fitness of assigning the object to the knapsack and the density
@@ -39,23 +39,23 @@ void MQKPIteratedGreedy::chooseOperation(
 
 		int indexObj = i;
 
-		if (_sol->w...) { //TODO check that it is not in a knapsack
+		if (_sol->whereIsObject(indexObj) == 0) { //check that it is not in a knapsack
 
-			for (unsigned j = ...) { //TODO for all the available knapsacks (do not consider 0) 
+			for (unsigned j = 1 ; j <= numKnapsacks; j++) { //for all the available knapsacks (do not consider 0)
 
-				//TODO Obtain delta fitness and density (deltaFitness divided by weight)
+				//Obtain delta fitness and density (deltaFitness divided by weight)
 				int indexKnapsack = j;
 
-				double deltaFitness = MQKPEvaluator::computeDel...;
-				double density = ...;
+				double deltaFitness = MQKPEvaluator::computeDeltaFitness(*_instance, *_sol, indexObj, indexKnapsack);
+				double density = deltaFitness / _instance->getWeight(indexObj);
 
 				//update the best values if they are improved
-				if (... || initialisedBestDensity == false) {
+				if (density > bestDensity || initialisedBestDensity == false) {
 					initialisedBestDensity = true;
-					bestDensity = ...;
-					bestObj = ...;
-					bestKnapsack = ...;
-					bestDeltaFitness = ...;
+					bestDensity = density;
+					bestObj = indexObj;
+					bestKnapsack = indexKnapsack;
+					bestDeltaFitness = deltaFitness;
 				}
 			}
 		}
@@ -70,14 +70,16 @@ void MQKPIteratedGreedy::rebuild() {
 	MQKPObjectAssignmentOperation operation;
 	chooseOperation(operation);
 
-	/** TODO
+	/**
 	 * While the operation has a positive increase of fitness, operation.getDeltaFitness(),
 	 *  1. Apply the operation in _sol
 	 *  2. Store the fitness of the solution in _result (for the plots)
 	 *  3. Select a new operation
 	 */
 	while (operation.getDeltaFitness() > 0) {
-		...
+		operation.apply(*_sol);
+		_results.push_back(_sol->getFitness());
+		chooseOperation(operation);
 	}
 }
 
@@ -95,7 +97,7 @@ void MQKPIteratedGreedy::destroy() {
 
 		double randSample = ((double)(rand())) / RAND_MAX;
 
-		if (...){
+		if (randSample >= _alpha){
 			_sol->putObjectIn(i, 0);
 		}
 	}
@@ -127,7 +129,7 @@ void MQKPIteratedGreedy::run(MQKPStopCondition& stopCondition) {
 		_bestSolution->copy(*_sol);
 
 	/**
-	 * TODO
+	 *
 	 * While the stop condition is not met
 	 *  1. Partially destroy the solution
 	 *  2. Rebuild the solution
@@ -137,14 +139,16 @@ void MQKPIteratedGreedy::run(MQKPStopCondition& stopCondition) {
 	 */
 
 	while (stopCondition.reached() == false) {
-		...
-		...
+		destroy();
+		rebuild();
 		_results.push_back(_sol->getFitness());
 
-		if (MQKPEvaluator::compare(_sol->getFitness(), _bestSolution->getFitness()) > 0)
-			...
-		else
-			...
+		if (MQKPEvaluator::compare(_sol->getFitness(), _bestSolution->getFitness()) > 0){
+			_bestSolution->copy(*_sol);
+		}
+		else{
+			_sol->copy(*_bestSolution);
+		}
 
 		stopCondition.notifyIteration();
 	}
