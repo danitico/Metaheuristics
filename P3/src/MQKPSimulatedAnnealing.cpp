@@ -57,7 +57,7 @@ void MQKPSimulatedAnnealing::run(MQKPStopCondition& stopCondition) {
 	unsigned numIterations = 0;
 
 	/**
-	 * TODO
+	 *
 	 * While the stop condition is not met
 	 *   1. Generate random indices for an object and a knapsack (including knapsack 0)
 	 *   2. Obtain the difference of fitness when applying the change over _solution
@@ -67,10 +67,10 @@ void MQKPSimulatedAnnealing::run(MQKPStopCondition& stopCondition) {
 	 *      then you should decrease the temperature
 	 */
 	while (stopCondition.reached()==false){
-		int indexObject = rand() % _instance->getNumObjs();
-		int indexKnapsack = rand() % (_instance->getNumKnapsacks()+1);
+		int indexObject = rand() % numObjs;
+		int indexKnapsack = rand() % (numKnapsacks+1);
 		double deltaFitness =MQKPEvaluator::computeDeltaFitness(*_instance,*_solution,indexObject,indexKnapsack);
-		if (this->accept(deltaFitness)== true){
+		if (this->accept(deltaFitness) == true){
 			_solution->putObjectIn(indexObject, indexKnapsack);
 			_solution->setFitness(_solution->getFitness() + deltaFitness);
 
@@ -81,7 +81,7 @@ void MQKPSimulatedAnnealing::run(MQKPStopCondition& stopCondition) {
 		numIterations++;
 		_results.push_back(_solution->getFitness());
 
-		if (numIterations % 10){
+		if (numIterations % _itsPerAnnealing == 0){
 			_T *= _annealingFactor;
 		}
 
@@ -91,7 +91,7 @@ void MQKPSimulatedAnnealing::run(MQKPStopCondition& stopCondition) {
 
 bool MQKPSimulatedAnnealing::accept(double deltaFitness) {
 	/**
-	 * TODO
+	 *
 	 * Obtain the probability of accepting a change, which is the exponential of
 	 * (difference of fitness divided by the temperature)
 	 * Generate a random number between 0 and 1
@@ -104,18 +104,20 @@ bool MQKPSimulatedAnnealing::accept(double deltaFitness) {
 	 */
 	double auxDeltaFitness = deltaFitness;
 	if (MQKPEvaluator::isToBeMinimised()){
-		if(auxDeltaFitness<0)return true;
+		if(auxDeltaFitness<0){
+			return true;
+		}
 	}
-	else
-	{
-		if(auxDeltaFitness>0)
-		return true;
-	}
+
 	double prob = exp(auxDeltaFitness/_T);
 	double randSample = (((double)rand()) /RAND_MAX);
-	if(randSample<prob)
-	return true;
-	else return false;
+
+	if(randSample<prob){
+		return true;
+	}
+	else{
+		return false;
+	}
 
 }
 

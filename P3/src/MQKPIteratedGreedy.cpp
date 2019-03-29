@@ -86,7 +86,7 @@ void MQKPIteratedGreedy::rebuild() {
 void MQKPIteratedGreedy::destroy() {
 
 	/**
-	 * TODO
+	 *
 	 * Iterate over all the objects and take them out from
 	 * their knapsack with a probability _alpha
 	 */
