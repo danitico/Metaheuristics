@@ -62,7 +62,7 @@ void MQKPTabuSearch::run(MQKPStopCondition& stopCondition) {
 	 *   4. Update the best so-far solution
 	 */
 
-	while (...) {
+	while (!stopCondition.reached()) {
 
 		vector<int> perm;
 		MQKPInstance::randomPermutation(numObjs, perm);
@@ -75,42 +75,42 @@ void MQKPTabuSearch::run(MQKPStopCondition& stopCondition) {
 			unsigned indexObj = perm[i];
 
 			//If the object is not tabu (use _shortTermMem_aux.find)
-			if (...) {
+			if (_shortTermMem_aux.find(indexObj) == _shortTermMem_aux.end()) {
 
 				//Try all the knapsacks (including 0) and choose the best option
-				for (unsigned j ...) {
+				for (unsigned j = 0; j <= numKnapsacks; j++) {
 
 					//Ignore the change which does not modify the object
 					if (_solution->whereIsObject(indexObj) == ((int)j))
 						continue;
 
 					//Obtain the difference of fitness of applying the operation
-					double deltaFitness = MQKPEvaluator::computeDel....;
+					double deltaFitness = MQKPEvaluator::computeDeltaFitness(*_instance, *_solution, indexObj, j);
 
 					//If the difference of fitness is the best up to this moment,
 					//store it to apply it later
 					if (deltaFitness > bestDeltaFitness
 							|| initialisedDeltaFitness == false) {
 						initialisedDeltaFitness = true;
-						bestDeltaFitness = ...;
-						bestOperation.setValues(...);
+						bestDeltaFitness = deltaFitness;
+						bestOperation.setValues(indexObj, j, bestDeltaFitness);
 					}
 				}
 			}
 		}
 
-		//TODO Apply the operation and store it in the short term memory
-		bestOperation.apply...
-		_shortTermMem....
-		_shortTermMem_aux....
+		//Apply the operation and store it in the short term memory
+		bestOperation.apply(*_solution);
+		_shortTermMem.push(bestOperation.getObj());
+		_shortTermMem_aux.insert(bestOperation.getObj());
 
-		//TODO If there are too many elements in the memory, according to the tabu tennure,
+		//If there are too many elements in the memory, according to the tabu tennure,
 		//delete the eldest one (i.e. obtain the first element of the queue and eliminate it
 		//from the queue and from the set)
 		if (_shortTermMem.size() > _tabuTennure) {
-			unsigned value = _shortTermMem....
-			_shortTermMem....
-			_shortTermMem_aux.erase(...);
+			unsigned value = _shortTermMem.front();
+			_shortTermMem.pop();
+			_shortTermMem_aux.erase(value);
 		}
 
 		//Update the best solution
