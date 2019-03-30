@@ -19,7 +19,8 @@ public:
 	void readInstance(char* fileName);
 	int getNumberOfLiterals() const{return nLiterals_;}
 	int getNumberOfClauses() const{return nClauses_;}
-	double computeFitness(const MSPSolution &solucion);
+	double computeFitness( MSPSolution &solucion);
+	double getDeltaFitness(const MSPSolution &solucion, int pos);
 };
 
 #endif /*SRC_INCLUDE_MSPINSTANCE_H_*/

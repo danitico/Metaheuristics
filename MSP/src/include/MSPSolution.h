@@ -9,15 +9,17 @@
 #define SRC_INCLUDE_MSPSOLUTION_H_
 
 #include <vector>
-#include "MSPInstance.h"
 class MSPSolution {
 private:
 	std::vector<bool> solution_;
+	double fitness_;
 public:
-	MSPSolution(const MSPInstance &instance);
+	MSPSolution(int numberOfLiterals);
 	virtual ~MSPSolution();
 	bool isTrue(int pos) const;
 	void setBool(int i,bool v);
+	void setFitness(double fit){fitness_=fit;}
+	double getFitness(){return fitness_;}
 };
 
 #endif /* SRC_INCLUDE_MSPSOLUTION_H_ */
