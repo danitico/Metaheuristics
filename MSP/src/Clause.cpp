@@ -5,29 +5,38 @@
  *      Author: chema969
  */
 
-#include "include/Clause.h"
-
-Clause::Clause() {
-	literals_.resize(0);
+#include "Clause.h"
+#include <iostream>
+Clause::Clause(){
 	//  Auto-generated constructor stub
 
 }
 
 Clause::~Clause() {
 	literals_.clear();
-	literals_.shrink_to_fit();
 	//  Auto-generated destructor stub
 }
 
 bool Clause::isTrue(const MSPSolution &solution) const{
-	for(int i=0;i<literals_.size();i++){
-		if(literals_[i]>0){
-			if(solution.isTrue(literals_[i])) return true;
+
+	for(std::set<int>::iterator i=literals_.begin();i!=literals_.end();i++){
+
+		if(*i>0){
+			if(solution.isTrue(*i)) return true;
 		}
+
 		else{
-			if(!solution.isTrue(-literals_[i])) return true;
+			if(!solution.isTrue(-*i)) return true;
 		}
 	}
 	return false;
 }
 
+bool Clause::has(int literal){
+
+	for(std::set<int>::iterator i=literals_.begin();i!=literals_.end();i++){
+		if(literal==*i) return true;
+		else if (literal>*i) return false;
+	}
+	return false;
+}

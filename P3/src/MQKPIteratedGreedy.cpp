@@ -86,7 +86,7 @@ void MQKPIteratedGreedy::rebuild() {
 void MQKPIteratedGreedy::destroy() {
 
 	/**
-	 * TODO
+	 *
 	 * Iterate over all the objects and take them out from
 	 * their knapsack with a probability _alpha
 	 */
@@ -97,7 +97,7 @@ void MQKPIteratedGreedy::destroy() {
 
 		double randSample = ((double)(rand())) / RAND_MAX;
 
-		if (randSample >= _alpha){
+		if (randSample <= _alpha){
 			_sol->putObjectIn(i, 0);
 		}
 	}
