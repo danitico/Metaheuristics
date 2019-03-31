@@ -105,6 +105,7 @@ bool MQKPSimulatedAnnealing::accept(double deltaFitness) {
 	double auxDeltaFitness = deltaFitness;
 	if (MQKPEvaluator::isToBeMinimised()){
 		if(auxDeltaFitness<0)return true;
+		else auxDeltaFitness*=(-1);
 	}
 	else
 	{
