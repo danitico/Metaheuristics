@@ -97,7 +97,7 @@ void MQKPIteratedGreedy::destroy() {
 
 		double randSample = ((double)(rand())) / RAND_MAX;
 
-		if (randSample >= _alpha){
+		if (randSample < _alpha){
 			_sol->putObjectIn(i, 0);
 		}
 	}

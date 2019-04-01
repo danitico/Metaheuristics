@@ -53,7 +53,7 @@ void MQKPTabuSearch::run(MQKPStopCondition& stopCondition) {
 	unsigned numIterations = 0;
 
 	/**
-	 * TODO
+	 *
 	 * While the stop condition is not met
 	 *   1. Generate a permutation of the objects
 	 *   2. Search for the best non tabu operation assigning an object to a knapsack (0 included)
