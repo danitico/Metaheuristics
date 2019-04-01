@@ -17,6 +17,8 @@ public:
 	MSPChangeOperation();
 	virtual ~MSPChangeOperation();
 	void apply(MSPSolution &solution);
+	void setValues(int indexObject, double deltaFitness){ _indexObj=indexObject;_deltaFitness=deltaFitness;}
+
 };
 
 #endif /* MSPCHANGEOPERATION_H_ */

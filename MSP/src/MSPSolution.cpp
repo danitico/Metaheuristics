@@ -16,7 +16,6 @@ MSPSolution::MSPSolution(int numberOfLiterals) {
 
 MSPSolution::~MSPSolution() {
 	solution_.resize(0);
-	solution_.shrink_to_fit();
 	// Auto-generated destructor stub
 }
 

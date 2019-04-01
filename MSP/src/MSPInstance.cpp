@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <cstdlib>
 #include "MSPSolution.h"
 #include "Clause.h"
 
@@ -49,6 +50,21 @@ double MSPInstance::computeFitness( MSPSolution &solucion){
 	}
 	solucion.setFitness(fit);
 	return fit;
+}
+
+void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
+
+	perm.clear();
+
+	for (int i = 1; i <= getNumberOfLiterals(); i++)
+		perm.push_back(i);
+
+	for (int i = 1; i <= getNumberOfLiterals(); i++){
+		int pos = rand() % getNumberOfLiterals();
+		int aux = perm[i];
+		perm[i] = perm[pos];
+		perm[pos] = aux;
+	}
 }
 
 double MSPInstance::getDeltaFitness(const MSPSolution &solucion, int pos){

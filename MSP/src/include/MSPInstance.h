@@ -17,6 +17,7 @@ public:
 	MSPInstance();
 	virtual ~MSPInstance();
 	void readInstance(char* fileName);
+    void randomPermutationOfLiterals( std::vector<int>& perm);
 	int getNumberOfLiterals() const{return nLiterals_;}
 	int getNumberOfClauses() const{return nClauses_;}
 	double computeFitness( MSPSolution &solucion);

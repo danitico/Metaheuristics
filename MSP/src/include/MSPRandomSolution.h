@@ -10,6 +10,7 @@
 
 #include "MSPInstance.h"
 #include "MSPSolution.h"
+#include <cstdlib>
 class MSPRandomSolution {
 public:
 	MSPRandomSolution();
