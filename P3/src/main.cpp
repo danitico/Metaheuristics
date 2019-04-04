@@ -320,6 +320,7 @@ int main(int argc, char **argv) {
 	//////////////////////
 	// Printing the results
 	//////////////////////
+
 	vector<double> lastResults;
 	for (unsigned int iInstance = 0; iInstance < numInstances; iInstance++){
 		cout << argv[iInstance*2+1] << "_" << argv[iInstance*2+2] << "_currentSA\t";
@@ -353,7 +354,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(0)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(0)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -362,7 +363,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(1)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(1)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -371,7 +372,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(2)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(2)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -380,7 +381,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(3)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(3)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -389,7 +390,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(4)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(4)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -398,7 +399,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(5)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(5)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -407,7 +408,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(6)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(6)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 
@@ -416,7 +417,7 @@ int main(int argc, char **argv) {
 				cout << allTheResults.at(iInstance)->at(7)->at(iIteration) << "\t";
 				lastResults[indexColumn] = allTheResults.at(iInstance)->at(7)->at(iIteration);
 			} else {
-				cout << lastResults[indexColumn] << "\t";
+				cout << "a" << "\t";
 			}
 			indexColumn++;
 		}

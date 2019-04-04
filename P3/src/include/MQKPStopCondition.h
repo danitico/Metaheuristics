@@ -79,6 +79,10 @@ public:
 		_time.reset(); //Reset the variable _time calling to the proper method
 	}
 
+	unsigned int getIterarions(){
+		return _numIterations;
+	}
+
 	/**
 	 * Function which notifies the stop condition object about the execution of a new
 	 * iteration of the metaheuristic
