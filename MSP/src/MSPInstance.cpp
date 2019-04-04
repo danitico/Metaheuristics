@@ -1,4 +1,11 @@
-#include "include/MSPInstance.h"
+#include "MSPInstance.h"
+#include <vector>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <cstdlib>
+#include "MSPSolution.h"
+#include "Clause.h"
 
 MSPInstance::MSPInstance()
 {
@@ -36,12 +43,67 @@ void MSPInstance::readInstance(char* fileName){
 
 }
 
-double MSPInstance::computeFitness(const MSPSolution &solucion){
+double MSPInstance::computeFitness( MSPSolution &solucion){
 	double fit=0.0;
 	for(int i=0;i<nClauses_;i++){
 		if(instancesVector_[i].isTrue(solucion)) fit++;
 	}
+	solucion.setFitness(fit);
 	return fit;
 }
+
+void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
+
+	perm.clear();
+
+	for (int i = 1; i <= getNumberOfLiterals(); i++)
+		perm.push_back(i);
+
+	for (int i = 1; i <= getNumberOfLiterals(); i++){
+		int pos = rand() % getNumberOfLiterals();
+		int aux = perm[i];
+		perm[i] = perm[pos];
+		perm[pos] = aux;
+	}
+}
+
+double MSPInstance::getDeltaFitness(const MSPSolution &solucion, int pos){
+	double fitnessDiference=0.0;
+	if(!solucion.isTrue(pos)){
+		for(int i=0;i<nClauses_;i++){
+			/*If the clause has the new boolean value and that clause used to be not fulfilled, now it is*/
+			if(instancesVector_[i].has(-pos)){
+				if(!instancesVector_[i].isTrue(solucion)){
+					fitnessDiference++;
+				}
+			}
+			/*If the clause has the old boolean value it can change to be not fulfilled*/
+			if(instancesVector_[i].has(pos)){
+				if(!instancesVector_[i].isTrue(solucion)){
+					fitnessDiference--;
+				}
+			}
+		}
+	}
+	else{
+			for(int i=0;i<nClauses_;i++){
+				/*If the clause has the new boolean value and that clause used to be not fulfilled, now it is*/
+				if(instancesVector_[i].has(pos)){
+					if(!instancesVector_[i].isTrue(solucion)){
+						fitnessDiference++;
+					}
+				}
+				/*If the clause has the old boolean value it can change to be not fulfilled*/
+				if(instancesVector_[i].has(-pos)){
+					if(!instancesVector_[i].isTrue(solucion)){
+						fitnessDiference--;
+					}
+				}
+			}
+		}
+
+	return fitnessDiference;
+}
+
 
 

@@ -7,15 +7,15 @@
 
 #include "include/MSPSolution.h"
 #include "include/MSPInstance.h"
-MSPSolution::MSPSolution(const MSPInstance &instance) {
-	solution_.resize(instance.getNumberOfLiterals()+1);
+MSPSolution::MSPSolution(int numberOfLiterals) {
+	solution_.resize(numberOfLiterals+1);
+	fitness_=0;
 	// Auto-generated constructor stub
 
 }
 
 MSPSolution::~MSPSolution() {
 	solution_.resize(0);
-	solution_.shrink_to_fit();
 	// Auto-generated destructor stub
 }
 
