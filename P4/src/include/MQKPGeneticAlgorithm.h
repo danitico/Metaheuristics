@@ -63,10 +63,18 @@ protected:
 	 */
 	unsigned indexBest(vector<Solution*> &set) {
 
-		//TODO Search for the index of the best solution in set
-		...
+		//Search for the index of the best solution in set
+		unsigned indexBestOne=0;
+		double bestFitness = set[0]->getFitness();
 
-		return indexBest;
+		for(unsigned i=1; i<set.size(); i++){
+			if(set[i]->getFitness() > bestFitness){
+				bestFitness = set[i]->getFitness();
+				indexBestOne = i;
+			}
+		}
+
+		return indexBestOne;
 	}
 
 	/**
@@ -89,7 +97,7 @@ protected:
 	void selectNewPopulation(vector<Solution*> &offspring) {
 
 		/**
-		 * TODO
+		 *
 		 * The new population will be the offspring, but, in case that the current
 		 * population has a better solution than the best one in offspring,
 		 * the best current solution will replace the worst one in offspring.
@@ -103,9 +111,12 @@ protected:
 		 * 5. Store the individuals of _offspring in current population
 		 */
 		unsigned int indexBestPop = indexBest(_population);
-		unsigned int indexBestOff = ...
+		unsigned int indexBestOff = indexBest(offspring);
 
-		...
+		if(_population[indexBestPop]->getFitness() > offspring[indexBestOff]->getFitness()){
+			unsigned worst = indexWorst(offspring);
+			offspring[worst]->copy(*_population[indexBestPop]);
+		}
 
 		//Delete the individuals in current population
 		for (unsigned i = 0; i < _popSize; i++) {
