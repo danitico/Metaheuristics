@@ -95,7 +95,7 @@ protected:
 		 * the best current solution will replace the worst one in offspring.
 		 *
 		 * 1. Find the index of the best solution in _population
-		 * 2. Find the index of the worst solution in _offspring
+		 * 2. Find the index of the best solution in _offspring
 		 * 3. If the best solution in _population is better than the best solution in _offspring
 		 *   a. Find the index of the worst solution in _offspring
 		 *   b. Make that solution copy the information of the best solution in _population
