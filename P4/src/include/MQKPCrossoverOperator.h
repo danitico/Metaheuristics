@@ -99,9 +99,9 @@ public:
 
 		unsigned numParents = (unsigned) parents.size();
 
-		//TODO Apply crossover considering every two consecutive pairs (1,2), (3,4)...
-		for (...) {
-			MQKPSolution *sol = cross(...);
+		//Apply crossover considering every two consecutive pairs (1,2), (3,4)...
+		for (unsigned i=0; i < numParents; i+=2) {
+			MQKPSolution *sol = cross(parents[i], parents[i+1]);
 			offspring.push_back(sol);
 		}
 	}
