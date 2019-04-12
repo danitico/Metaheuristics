@@ -38,12 +38,18 @@ protected:
 	Solution* selectOne (vector<Solution*> &set){
 
 		/**
-		 * TODO
+		 *
 		 * 1. Select randomly a solution as the current winner
 		 *
 		 * 2. Repeat (_k-1) times: select randomly another solutions and make a tournament with the current winner (keep the best one)
 		 */
-		...
+		Solution* best=set[rand()%set.size()];
+		for(unsigned i=0;i<_k-1;i++){
+			Solution* aux=set[rand()%set.size()];
+			if(aux->getFitness()>best->getFitness()){
+				best=aux;
+			}
+		}
 		return best;
 	}
 

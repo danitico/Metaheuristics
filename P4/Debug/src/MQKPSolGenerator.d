@@ -1,19 +1,19 @@
-src/MQKPSolGenerator.d: ../src/MQKPSolGenerator.cpp \
- /home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPSolGenerator.h \
- /home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPInstance.h \
- /home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPSolution.h \
- /home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/Solution.h \
- /home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPInstance.h \
- /home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPSolution.h
+src/MQKPSolGenerator.o: ../src/MQKPSolGenerator.cpp \
+ /home/chema969/Metaheuristics/P4/src/include/MQKPSolGenerator.h \
+ /home/chema969/Metaheuristics/P4/src/include/MQKPInstance.h \
+ /home/chema969/Metaheuristics/P4/src/include/MQKPSolution.h \
+ /home/chema969/Metaheuristics/P4/src/include/Solution.h \
+ /home/chema969/Metaheuristics/P4/src/include/MQKPInstance.h \
+ /home/chema969/Metaheuristics/P4/src/include/MQKPSolution.h
 
-/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPSolGenerator.h:
+/home/chema969/Metaheuristics/P4/src/include/MQKPSolGenerator.h:
 
-/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPInstance.h:
+/home/chema969/Metaheuristics/P4/src/include/MQKPInstance.h:
 
-/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPSolution.h:
+/home/chema969/Metaheuristics/P4/src/include/MQKPSolution.h:
 
-/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/Solution.h:
+/home/chema969/Metaheuristics/P4/src/include/Solution.h:
 
-/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPInstance.h:
+/home/chema969/Metaheuristics/P4/src/include/MQKPInstance.h:
 
-/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include/MQKPSolution.h:
+/home/chema969/Metaheuristics/P4/src/include/MQKPSolution.h:

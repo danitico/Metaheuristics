@@ -84,8 +84,15 @@ protected:
 	 */
 	unsigned indexWorst(vector<Solution*> &set) {
 
-		//TODO Search for the index of the worst solution in set
-		...
+		// Search for the index of the worst solution in set
+		unsigned indexWorst=0;
+		double worstFitness = set[0]->getFitness();
+		for(unsigned i=1;i<set.size();i++){
+			if(set[i]->getFitness() < worstFitness){
+				worstFitness = set[i]->getFitness();
+				indexWorst=i;
+			}
+		}
 
 		return indexWorst;
 	}
@@ -144,16 +151,17 @@ protected:
 			MQKPSolution *s = (MQKPSolution*) sol;
 
 			/**
-			 * TODO
+			 *
 			 * A new functionality has been included in Solution to detect if its fitness was previously calculated.
 			 * which is useful when the descendant is a copy of the parent.
              * In this way, only those solutions which has an invalid fitness will be evaluated
 			 */
 			if (!(s->hasValidFitness())) {
 
+				double fitness= MQKPEvaluator::computeFitness(*_instance, *s);
 				//Evaluar
-				...
-				results.push_back(fitness);
+
+				_results.push_back(fitness);
 				s->setFitness(fitness);
 
 				//Actualizar la mejor solución
@@ -161,7 +169,7 @@ protected:
 					_bestSolution->copy(*s);
 				}
 			}
-		}
+		}//TODO Ask if it is correct or I misunderstood the definition
 	}
 
 	/**

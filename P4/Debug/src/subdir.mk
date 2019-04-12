@@ -38,7 +38,7 @@ CPP_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -std=c++0x -I"/home/pagutierrez/Escritorio/TOSHIBAHD/Docencia/curso17-18/MH/workspace/P4Metaheuristics/src/include" -O0 -g3 -pg -pedantic -pedantic-errors -Wall -Wextra -Wconversion -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -std=c++0x -I"/home/chema969/Metaheuristics/P4/src/include" -O0 -g3 -pg -pedantic -pedantic-errors -Wall -Wextra -Wconversion -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
