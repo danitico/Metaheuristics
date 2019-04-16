@@ -264,31 +264,29 @@ public:
 		 * 3. Store the average of the final population and the best solution
 		 */
 
-		initPop...
+		initPopulation(_population.size());
+				while (stopCondition.reached() == false) {
 
-		while (stopCondition.reached() == false) {
+					_popMeanResults.push_back(computeMeanFitness(_population));
+					_bestPerIterations.push_back(
+							_population.at(indexBest(_population))->getFitness());
 
-			_popMeanResults.push_back(computeMeanFitness(_population));
-			_bestPerIterations.push_back(
-					_population.at(indexBest(_population))->getFitness());
+					vector<Solution*> parents;
+					_selector->select(_population,parents); // Selection of parents
 
-			vector<Solution*> parents;
-			_selector->... // Selection of parents
+					vector<Solution*> offspring;
+					_crossoverOp->cross(parents, offspring); // Crossover
+					_mutOp->mutate(offspring);// Mutation
+					evaluate(offspring);// Evaluate
+					_offMeanResults.push_back(computeMeanFitness(offspring));
 
-			vector<Solution*> offspring;
-			... // Crossover
-			... // Mutation
-			... // Evaluation
+					selectNewPopulation(offspring); // Selection of the offspring (replacement)
+					stopCondition.notifyIteration();
+				}
 
-			_offMeanResults.push_back(computeMeanFitness(offspring));
-
-			... // Selection of the offspring (replacement)
-			stopCondition.notifyIteration();
-		}
-
-		_popMeanResults.push_back(computeMeanFitness(_population));
-		_bestPerIterations.push_back(
-		_population.at(indexBest(_population))->getFitness());
+				_popMeanResults.push_back(computeMeanFitness(_population));
+				_bestPerIterations.push_back(
+				_population.at(indexBest(_population))->getFitness());
 	}
 
 	/**
