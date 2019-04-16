@@ -45,7 +45,13 @@ protected:
 
 		//TODO Iterate over the objects and, according to a mutation probability, assign them
 		//to a random knapsack (0, 1 or more than 1 genes could be modified)
-		...
+		for(int i=0;i<_numObjs;i++)
+				{
+					double randSample=(((double)rand())/RAND_MAX);
+					if(randSample <_mutProb){
+					sol[i]=rand()%(_numKnapsakcs+1);
+					}
+				}
 	}
 
 public:
