@@ -264,7 +264,7 @@ public:
 		 * 3. Store the average of the final population and the best solution
 		 */
 
-		initPopulation(_population.size());
+		initPopulation(this->_popSize);
 				while (stopCondition.reached() == false) {
 
 					_popMeanResults.push_back(computeMeanFitness(_population));
