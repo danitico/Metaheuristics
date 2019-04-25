@@ -541,7 +541,7 @@ public:
 		}
 
 
-		//TODO Initialization of the pheromone matrix by using _initTau
+		// Initialization of the pheromone matrix by using _initTau
 		unsigned numObjs = _instance->getNumObjs();
 		unsigned numKnapsacks = _instance->getNumKnapsacks() + 1;
 
@@ -550,7 +550,7 @@ public:
 			_phMatrix.push_back(aVector);
 
 			for (unsigned j = 0; j < numKnapsacks; j++) {
-				aVector->push_back(initTau); //Use _initTau
+				aVector->push_back(_initTau); //Use _initTau
 			}
 		}
 	}
