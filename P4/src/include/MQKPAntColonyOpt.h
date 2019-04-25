@@ -62,8 +62,10 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		 */
 		double sumSignificances(vector<double> &significances) {
 
-			//TODO Return the sum of elements in significances
-			...
+			// Return the sum of elements in significances
+			double sum=0;
+			for(unsigned int i=0;i<significances.size();i++)
+				sum+=significances[i];
 
 			return sum;
 		}
@@ -522,9 +524,11 @@ public:
 		_bestSolution->setFitness(fitness);
 
 
-		//TODO Generation of the ants: create empty ants (using the constructor) and include them in _ants
+		// Generation of the ants: create empty ants (using the constructor) and include them in _ants
+		MQKPAnt *auxiliarAnt=new MQKPAnt(candidateListSize, this);//MQKPAnt(unsigned candidateListSize, MQKPAntColonyOpt *colony)
+
 		for (unsigned i = 0; i < numAnts; i++) {
-			...
+			_ants.push_back(auxiliarAnt);
 		}
 
 
@@ -537,7 +541,7 @@ public:
 			_phMatrix.push_back(aVector);
 
 			for (unsigned j = 0; j < numKnapsacks; j++) {
-				aVector->push_back(...); //Use _initTau
+				aVector->push_back(initTau); //Use _initTau
 			}
 		}
 	}
@@ -553,9 +557,9 @@ public:
 			exit(1);
 		}
 
-		//TODO While the stop condition is not met, call to the iterate method
+		// While the stop condition is not met, call to the iterate method
 		while (stopCondition.reached() == false) {
-			...
+			iterate();
 			stopCondition.notifyIteration();
 		}
 	}
