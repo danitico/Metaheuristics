@@ -61,11 +61,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		 * @return sum of the values of the relevance vector
 		 */
 		double sumSignificances(vector<double> &significances) {
-
-			// Return the sum of elements in significances
-			double sum=0;
-			for(unsigned int i=0;i<significances.size();i++)
-				sum+=significances[i];
+			int sum= std:: accumulate(significances.begin(), significances.end(), 0);
 
 			return sum;
 		}
@@ -159,28 +155,33 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 				for (unsigned j = 1;
 						j <= numKnapsacks && numTries < _candidateListSize;
 						j++) {
-
-					//TODO
 					// Obtain deltaMaxCapacityViolation and, if the movement violates
 					// the capacity of the knapsack, discard it
-					...
-
-					//TODO Obtain the deltaFitness and count this as a try (given that we have previously checked
+					double deltaMaxCapacityViolation =instance->getDeltaMaxCapacityViolation(*_sol,
+														indexObj, j);
+					if (deltaMaxCapacityViolation > 0)
+											continue;
+					//Obtain the deltaFitness and count this as a try (given that we have previously checked
 					//that there is no violation, the deltaFitness will be DeltaSumProfits)
-					...
-
-					//TODO Ignore those options with worse fitness or the same fitness
+					double deltaFitness = instance->getDeltaSumProfits(*_sol,indexObj, j);
+										numTries++;
+					// Ignore those options with worse fitness or the same fitness
 					// by using a "continue"
 					//(they should not happen if the profits are always positive, but
 					// just in case...)
-					...
+					if (deltaFitness <= 0)continue;
 
 					/**
-					 * TODO
 					 * 1. Obtain its relevance as densityOfTheObject^beta * amountOfPheromone^alpha
 					 * 2. If it is better than the best-so-far solution, store it in op
 					 */
-					...
+					double density = deltaFitness/ instance->getWeight(indexObj);
+					double significance = pow(density, beta)* pow(phMatrix.at(indexObj)->at(j), alpha);
+					if (significance>bestSignificance)
+					{
+						bestSignificance=significance;
+						op->setValues(indexObj,j,deltaFitness);
+					}
 				}
 			}
 		}
@@ -226,11 +227,17 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		void resetSolution() {
 
 			/**
-			 * TODO
+			 *
 			 * 1. Assign all the objects to the knapsack 0 and insert them in the memory _objectsLeft
 			 * 2. Assign a zero fitness
 			 */
-			...
+			int numObjs=instance->getNumObjs();
+			_sol.assign(numObjs,0);
+			for(int i=0;i<=numObjs;i++)
+			{
+				_objectsLeft.insert(i);
+			}
+			_sol->MQKPSolution::setFitness(0);
 		}
 
 		/**
@@ -257,7 +264,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 					return;
 				}
 
-				//TODO Select one of the alternatives according to some probabilities which
+				//Select one of the alternatives according to some probabilities which
 				//are proportional to the relevances
 				double v_sumSignificances = sumSignificances(significances);
 				double randSample = (((double) rand()) / RAND_MAX)
@@ -265,11 +272,9 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 				randSample -= significances.at(0);
 				unsigned opSelected = 0;
 
-				//In each loop of while, I substract significance[i] - randSample
-				//and while it is true, we continue looping and equaling opSelected
-				//to the actual i
-				while (...) {
-					...
+				while (randSample>0) {
+					opSelected+=1;
+					randSample-=significances(opSelected);
 				}
 
 				//Assign the alternative selected in opSelected
@@ -284,10 +289,12 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 				freeAlternatives(alternatives);
 			}
 
-			//TODO If an alternative was selected, apply it to the solution
+			//If an alternative was selected, apply it to the solution
             //and delete the corresponding object from _objectsLeft
-			if (operation.getObj() >= 0) {
-				...
+			if (int obj=operation.getObj() >= 0) {
+				operation.apply(_sol);
+				auto pos= _objectsLeft.find(obj);
+				_objectsLeft.erase(pos);
 			}
 		}
 
