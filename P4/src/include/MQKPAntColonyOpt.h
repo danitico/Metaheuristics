@@ -61,7 +61,6 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		 * @return sum of the values of the relevance vector
 		 */
 		double sumSignificances(vector<double> &significances) {
-
 			int sum= std:: accumulate(significances.begin(), significances.end(), 0);
 
 			return sum;
@@ -347,10 +346,10 @@ protected:
 	 * @param[in] op Option which the ant selected, for which the update is going to be applied
 	 */
 	void localUpdate(MQKPObjectAssignmentOperation &op) {
-		// TODO
 		// New pheremone value has to be stored in the matrix _phMatrix
 		// The new value will be equal to ((1-_evaporation)*oldValue)+(evaporation*_initTau)
-		...
+		double oldvalue = _phMatrix[0][op.getObj()][op.getKnapsack()];
+		_phMatrix[0][op.getObj()][op.getKnapsack()] = (1 - _evaporation)*oldvalue + _evaporation*_initTau;
 	}
 
 	/**
@@ -362,10 +361,11 @@ protected:
 		unordered_set<unsigned> stoppedAnts;
 		int i = 0;
 
-		//TODO Reset the solutions of each ant (using the corresponding method)
+		//Reset the solutions of each ant (using the corresponding method)
 		// and insert the index in moving ants
 		for (auto ant : _ants) {
-			...
+			ant->resetSolution();
+			movingAnts.insert(i);
 			i++;
 		}
 
@@ -373,19 +373,19 @@ protected:
 		while (movingAnts.size() > 0) {
 			stoppedAnts.clear();
 
-			//TODO Move each ant
+			//Move each ant
 			for (auto iAnt : movingAnts) {
 				MQKPAnt *ant = _ants[iAnt];
 				MQKPObjectAssignmentOperation op;
 				op.setValues(-1, -1, 0);
-				... // Choose the operation calling to the method
+				ant->chooseOperation(op); // Choose the operation calling to the method
 
-				//TODO If the ant has moved, then apply the local update of the pheromone.
+				//If the ant has moved, then apply the local update of the pheromone.
 				//If not, insert it in stoppedAnts to be removed from from movingAnts
-				if (...) {
-					...
+				if (op.getObj() != -1) {
+					localUpdate(op);
 				} else {
-					...
+					stoppedAnts.insert(iAnt);
 				}
 			}
 
@@ -441,20 +441,25 @@ protected:
 	 */
 	void iterate() {
 
-		//TODO Release the ants
-		...
+		//Release the ants
+		releaseAnts();
 		saveStatistics();
 
 		//Apply pheromone with the best solution
 		unsigned numObjs = _instance->getNumObjs();
 		double fitness = _bestSolution->getFitness();
 
-		//TODO For each object, deposit the pheromone of the best solution
+		//For each object, deposit the pheromone of the best solution
 		// in the pair (object,knapsack) where the object is positioned.
 		// The new value is equal to (1-_evaporation) * oldValue + (_evaporation * fitness)
 		// The new value is assigned only if it is higher than _initTau
 		for (unsigned i = 0; i < numObjs; i++) {
-			...
+			double oldvalue = _phMatrix[0][i][_bestSolution->whereIsObject(i)];
+			double newvalue = (1 - _evaporation)*oldvalue + _evaporation*fitness;
+
+			if(newvalue > _initTau){
+				_phMatrix[0][i][_bestSolution->whereIsObject(i)] = newvalue;
+			}
 		}
 	}
 
@@ -535,13 +540,15 @@ public:
 		_bestSolution->setFitness(fitness);
 
 
-		//TODO Generation of the ants: create empty ants (using the constructor) and include them in _ants
+		// Generation of the ants: create empty ants (using the constructor) and include them in _ants
+		MQKPAnt *auxiliarAnt=new MQKPAnt(candidateListSize, this);//MQKPAnt(unsigned candidateListSize, MQKPAntColonyOpt *colony)
+
 		for (unsigned i = 0; i < numAnts; i++) {
-			...
+			_ants.push_back(auxiliarAnt);
 		}
 
 
-		//TODO Initialization of the pheromone matrix by using _initTau
+		// Initialization of the pheromone matrix by using _initTau
 		unsigned numObjs = _instance->getNumObjs();
 		unsigned numKnapsacks = _instance->getNumKnapsacks() + 1;
 
@@ -550,7 +557,7 @@ public:
 			_phMatrix.push_back(aVector);
 
 			for (unsigned j = 0; j < numKnapsacks; j++) {
-				aVector->push_back(...); //Use _initTau
+				aVector->push_back(_initTau); //Use _initTau
 			}
 		}
 	}
@@ -566,9 +573,9 @@ public:
 			exit(1);
 		}
 
-		//TODO While the stop condition is not met, call to the iterate method
+		// While the stop condition is not met, call to the iterate method
 		while (stopCondition.reached() == false) {
-			...
+			iterate();
 			stopCondition.notifyIteration();
 		}
 	}
