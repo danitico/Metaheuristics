@@ -20,6 +20,7 @@
 #include <unordered_set>
 #include <iostream>
 #include <cmath>
+#include <numeric>
 
 using namespace std;
 
@@ -61,7 +62,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		 * @return sum of the values of the relevance vector
 		 */
 		double sumSignificances(vector<double> &significances) {
-			int sum= std:: accumulate(significances.begin(), significances.end(), 0);
+			int sum= std::accumulate(significances.begin(), significances.end(), 0);
 
 			return sum;
 		}
@@ -164,7 +165,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 					//Obtain the deltaFitness and count this as a try (given that we have previously checked
 					//that there is no violation, the deltaFitness will be DeltaSumProfits)
 					double deltaFitness = instance->getDeltaSumProfits(*_sol,indexObj, j);
-										numTries++;
+					numTries++;
 					// Ignore those options with worse fitness or the same fitness
 					// by using a "continue"
 					//(they should not happen if the profits are always positive, but
@@ -180,7 +181,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 					if (significance>bestSignificance)
 					{
 						bestSignificance=significance;
-						op->setValues(indexObj,j,deltaFitness);
+						op.setValues(indexObj,j,deltaFitness);
 					}
 				}
 			}
@@ -231,10 +232,10 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 			 * 1. Assign all the objects to the knapsack 0 and insert them in the memory _objectsLeft
 			 * 2. Assign a zero fitness
 			 */
-			int numObjs=instance->getNumObjs();
-			_sol.assign(numObjs,0);
-			for(int i=0;i<=numObjs;i++)
+			int numObjs = _colony->_instance->getNumObjs();
+			for(int i=0; i<numObjs; i++)
 			{
+				_sol->putObjectIn(i, 0);
 				_objectsLeft.insert(i);
 			}
 			_sol->MQKPSolution::setFitness(0);
@@ -274,7 +275,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 
 				while (randSample>0) {
 					opSelected+=1;
-					randSample-=significances(opSelected);
+					randSample-=significances.at(opSelected);
 				}
 
 				//Assign the alternative selected in opSelected
@@ -292,7 +293,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 			//If an alternative was selected, apply it to the solution
             //and delete the corresponding object from _objectsLeft
 			if (int obj=operation.getObj() >= 0) {
-				operation.apply(_sol);
+				operation.apply(*_sol);
 				auto pos= _objectsLeft.find(obj);
 				_objectsLeft.erase(pos);
 			}
