@@ -292,10 +292,9 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 
 			//If an alternative was selected, apply it to the solution
             //and delete the corresponding object from _objectsLeft
-			if (int obj=operation.getObj() >= 0) {
+			if (unsigned obj=operation.getObj() >= 0) {
 				operation.apply(*_sol);
-				auto pos= _objectsLeft.find(obj);
-				_objectsLeft.erase(pos);
+				_objectsLeft.erase(obj);
 			}
 		}
 
@@ -349,8 +348,8 @@ protected:
 	void localUpdate(MQKPObjectAssignmentOperation &op) {
 		// New pheremone value has to be stored in the matrix _phMatrix
 		// The new value will be equal to ((1-_evaporation)*oldValue)+(evaporation*_initTau)
-		double oldvalue = _phMatrix[0][op.getObj()][op.getKnapsack()];
-		_phMatrix[0][op.getObj()][op.getKnapsack()] = (1 - _evaporation)*oldvalue + _evaporation*_initTau;
+		double oldvalue = _phMatrix.at(op.getObj())->at(op.getKnapsack());
+		_phMatrix.at(op.getObj())->at(op.getKnapsack()) = (1 - _evaporation)*oldvalue + _evaporation*_initTau;
 	}
 
 	/**
@@ -455,11 +454,11 @@ protected:
 		// The new value is equal to (1-_evaporation) * oldValue + (_evaporation * fitness)
 		// The new value is assigned only if it is higher than _initTau
 		for (unsigned i = 0; i < numObjs; i++) {
-			double oldvalue = _phMatrix[0][i][_bestSolution->whereIsObject(i)];
+			double oldvalue = _phMatrix.at(i)->at(_bestSolution->whereIsObject(i));
 			double newvalue = (1 - _evaporation)*oldvalue + _evaporation*fitness;
 
 			if(newvalue > _initTau){
-				_phMatrix[0][i][_bestSolution->whereIsObject(i)] = newvalue;
+				_phMatrix.at(i)->at(_bestSolution->whereIsObject(i)) = newvalue;
 			}
 		}
 	}
@@ -542,10 +541,9 @@ public:
 
 
 		// Generation of the ants: create empty ants (using the constructor) and include them in _ants
-		MQKPAnt *auxiliarAnt=new MQKPAnt(candidateListSize, this);//MQKPAnt(unsigned candidateListSize, MQKPAntColonyOpt *colony)
-
+		//MQKPAnt *auxiliarAnt=new MQKPAnt(candidateListSize, this);//MQKPAnt(unsigned candidateListSize, MQKPAntColonyOpt *colony)
 		for (unsigned i = 0; i < numAnts; i++) {
-			_ants.push_back(auxiliarAnt);
+			_ants.push_back(new MQKPAnt(candidateListSize, this));
 		}
 
 
