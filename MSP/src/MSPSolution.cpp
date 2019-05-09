@@ -5,10 +5,11 @@
  *      Author: chema969
  */
 
-#include "include/MSPSolution.h"
-#include "include/MSPInstance.h"
+#include "MSPSolution.h"
+#include "MSPInstance.h"
 MSPSolution::MSPSolution(int numberOfLiterals) {
 	solution_.resize(numberOfLiterals+1);
+	numlits_=numberOfLiterals;
 	fitness_=0;
 	// Auto-generated constructor stub
 
@@ -26,3 +27,12 @@ MSPSolution::~MSPSolution() {
  bool MSPSolution::isTrue(int pos) const{
 	return solution_[pos];
 }
+ void MSPSolution::copy(MSPSolution& solution) {
+	 int literals=getNumberOfLiterals();
+
+ 	for (int i = 0; i < literals ; i++){
+ 		bool val= solution.isTrue(i);
+ 		solution_[i] = val;
+ 	}
+ 	fitness_ = solution.fitness_;
+ }

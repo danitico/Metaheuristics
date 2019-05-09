@@ -12,6 +12,7 @@ MSPInstance::MSPInstance()
 	nClauses_=0;
 	nLiterals_=0;
 	instancesVector_.resize(0);
+	_numEvaluations =0;
 }
 
 MSPInstance::~MSPInstance()

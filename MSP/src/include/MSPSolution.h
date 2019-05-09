@@ -12,6 +12,7 @@
 class MSPSolution {
 private:
 	std::vector<bool> solution_;
+	int numlits_;
 	double fitness_;
 public:
 	MSPSolution(int numberOfLiterals);
@@ -20,6 +21,7 @@ public:
 	void setBool(int i,bool v);
 	void setFitness(double fit){fitness_=fit;}
 	double getFitness(){return fitness_;}
+	void copy(MSPSolution &solution);
 };
 
 #endif /* SRC_INCLUDE_MSPSOLUTION_H_ */
