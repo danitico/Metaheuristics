@@ -21,6 +21,7 @@
 #include <iostream>
 #include <cmath>
 #include <numeric>
+#include <cstdlib>
 
 using namespace std;
 
@@ -292,9 +293,9 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 
 			//If an alternative was selected, apply it to the solution
             //and delete the corresponding object from _objectsLeft
-			if (unsigned obj=operation.getObj() >= 0) {
+			if (operation.getObj() >= 0) {
 				operation.apply(*_sol);
-				_objectsLeft.erase(obj);
+				_objectsLeft.erase(operation.getObj());
 			}
 		}
 
