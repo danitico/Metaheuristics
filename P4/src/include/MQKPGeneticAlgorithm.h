@@ -159,17 +159,16 @@ protected:
 			if (!(s->hasValidFitness())) {
 
 				double fitness= MQKPEvaluator::computeFitness(*_instance, *s);
-				//Evaluar
 
 				_results.push_back(fitness);
 				s->setFitness(fitness);
 
-				//Actualizar la mejor solución
+
 				if (MQKPEvaluator::compare(fitness, _bestSolution->getFitness()) > 0){
 					_bestSolution->copy(*s);
 				}
 			}
-		}//TODO Ask if it is correct or I misunderstood the definition
+		}
 	}
 
 	/**
@@ -186,7 +185,7 @@ protected:
 		}
 
 		/**
-		 * TODO
+		 *
 		 * For each iteration:
 		 *  1. Generate a random solution
 		 *  2. Evaluate it and assign its fitness
@@ -194,7 +193,9 @@ protected:
 		 *  4. Include the solution in the population (done)
 		 */
 		for (unsigned i = 0; i < popSize; i++) {
-			...
+			MQKPSolution *sol = new MQKPSolution(*_instance);
+			MQKPSolGenerator::genRandomSol(*_instance, *sol);
+			double fitness = MQKPEvaluator::computeFitness(*_instance, *sol);
 			_results.push_back(fitness);
 			_population.push_back(sol);
 		}
@@ -251,7 +252,7 @@ public:
 	virtual void run(MQKPStopCondition &stopCondition) {
 
 		/**
-		 * TODO
+		 *
 		 * 1. Initialize the population
 		 * 2. While the stop condition is not met
 		 *   a. Store the average of the current population and the best solution
@@ -264,7 +265,7 @@ public:
 		 * 3. Store the average of the final population and the best solution
 		 */
 
-		initPopulation(_population.size());
+		initPopulation(this->_popSize);
 				while (stopCondition.reached() == false) {
 
 					_popMeanResults.push_back(computeMeanFitness(_population));

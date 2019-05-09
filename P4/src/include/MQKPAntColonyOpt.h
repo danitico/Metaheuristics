@@ -20,6 +20,8 @@
 #include <unordered_set>
 #include <iostream>
 #include <cmath>
+#include <numeric>
+#include <cstdlib>
 
 using namespace std;
 
@@ -61,9 +63,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		 * @return sum of the values of the relevance vector
 		 */
 		double sumSignificances(vector<double> &significances) {
-
-			//TODO Return the sum of elements in significances
-			...
+			int sum= std::accumulate(significances.begin(), significances.end(), 0);
 
 			return sum;
 		}
@@ -157,28 +157,33 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 				for (unsigned j = 1;
 						j <= numKnapsacks && numTries < _candidateListSize;
 						j++) {
-
-					//TODO
 					// Obtain deltaMaxCapacityViolation and, if the movement violates
 					// the capacity of the knapsack, discard it
-					...
-
-					//TODO Obtain the deltaFitness and count this as a try (given that we have previously checked
+					double deltaMaxCapacityViolation =instance->getDeltaMaxCapacityViolation(*_sol,
+														indexObj, j);
+					if (deltaMaxCapacityViolation > 0)
+											continue;
+					//Obtain the deltaFitness and count this as a try (given that we have previously checked
 					//that there is no violation, the deltaFitness will be DeltaSumProfits)
-					...
-
-					//TODO Ignore those options with worse fitness or the same fitness
+					double deltaFitness = instance->getDeltaSumProfits(*_sol,indexObj, j);
+					numTries++;
+					// Ignore those options with worse fitness or the same fitness
 					// by using a "continue"
 					//(they should not happen if the profits are always positive, but
 					// just in case...)
-					...
+					if (deltaFitness <= 0)continue;
 
 					/**
-					 * TODO
 					 * 1. Obtain its relevance as densityOfTheObject^beta * amountOfPheromone^alpha
 					 * 2. If it is better than the best-so-far solution, store it in op
 					 */
-					...
+					double density = deltaFitness/ instance->getWeight(indexObj);
+					double significance = pow(density, beta)* pow(phMatrix.at(indexObj)->at(j), alpha);
+					if (significance>bestSignificance)
+					{
+						bestSignificance=significance;
+						op.setValues(indexObj,j,deltaFitness);
+					}
 				}
 			}
 		}
@@ -224,11 +229,17 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 		void resetSolution() {
 
 			/**
-			 * TODO
+			 *
 			 * 1. Assign all the objects to the knapsack 0 and insert them in the memory _objectsLeft
 			 * 2. Assign a zero fitness
 			 */
-			...
+			int numObjs = _colony->_instance->getNumObjs();
+			for(int i=0; i<numObjs; i++)
+			{
+				_sol->putObjectIn(i, 0);
+				_objectsLeft.insert(i);
+			}
+			_sol->MQKPSolution::setFitness(0);
 		}
 
 		/**
@@ -255,7 +266,7 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 					return;
 				}
 
-				//TODO Select one of the alternatives according to some probabilities which
+				//Select one of the alternatives according to some probabilities which
 				//are proportional to the relevances
 				double v_sumSignificances = sumSignificances(significances);
 				double randSample = (((double) rand()) / RAND_MAX)
@@ -263,8 +274,9 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 				randSample -= significances.at(0);
 				unsigned opSelected = 0;
 
-				while (...) {
-					...
+				while (randSample>0) {
+					opSelected+=1;
+					randSample-=significances.at(opSelected);
 				}
 
 				//Assign the alternative selected in opSelected
@@ -279,10 +291,11 @@ class MQKPAntColonyOpt: public MQKPMetaheuristic {
 				freeAlternatives(alternatives);
 			}
 
-			//TODO If an alternative was selected, apply it to the solution
+			//If an alternative was selected, apply it to the solution
             //and delete the corresponding object from _objectsLeft
 			if (operation.getObj() >= 0) {
-				...
+				operation.apply(*_sol);
+				_objectsLeft.erase(operation.getObj());
 			}
 		}
 
@@ -334,10 +347,10 @@ protected:
 	 * @param[in] op Option which the ant selected, for which the update is going to be applied
 	 */
 	void localUpdate(MQKPObjectAssignmentOperation &op) {
-		// TODO
 		// New pheremone value has to be stored in the matrix _phMatrix
 		// The new value will be equal to ((1-_evaporation)*oldValue)+(evaporation*_initTau)
-		...
+		double oldvalue = _phMatrix.at(op.getObj())->at(op.getKnapsack());
+		_phMatrix.at(op.getObj())->at(op.getKnapsack()) = (1 - _evaporation)*oldvalue + _evaporation*_initTau;
 	}
 
 	/**
@@ -349,10 +362,11 @@ protected:
 		unordered_set<unsigned> stoppedAnts;
 		int i = 0;
 
-		//TODO Reset the solutions of each ant (using the corresponding method)
+		//Reset the solutions of each ant (using the corresponding method)
 		// and insert the index in moving ants
 		for (auto ant : _ants) {
-			...
+			ant->resetSolution();
+			movingAnts.insert(i);
 			i++;
 		}
 
@@ -360,19 +374,19 @@ protected:
 		while (movingAnts.size() > 0) {
 			stoppedAnts.clear();
 
-			//TODO Move each ant
+			//Move each ant
 			for (auto iAnt : movingAnts) {
 				MQKPAnt *ant = _ants[iAnt];
 				MQKPObjectAssignmentOperation op;
 				op.setValues(-1, -1, 0);
-				... // Choose the operation calling to the method
+				ant->chooseOperation(op); // Choose the operation calling to the method
 
-				//TODO If the ant has moved, then apply the local update of the pheromone.
+				//If the ant has moved, then apply the local update of the pheromone.
 				//If not, insert it in stoppedAnts to be removed from from movingAnts
-				if (...) {
-					...
+				if (op.getObj() != -1) {
+					localUpdate(op);
 				} else {
-					...
+					stoppedAnts.insert(iAnt);
 				}
 			}
 
@@ -428,20 +442,25 @@ protected:
 	 */
 	void iterate() {
 
-		//TODO Release the ants
-		...
+		//Release the ants
+		releaseAnts();
 		saveStatistics();
 
 		//Apply pheromone with the best solution
 		unsigned numObjs = _instance->getNumObjs();
 		double fitness = _bestSolution->getFitness();
 
-		//TODO For each object, deposit the pheromone of the best solution
+		//For each object, deposit the pheromone of the best solution
 		// in the pair (object,knapsack) where the object is positioned.
 		// The new value is equal to (1-_evaporation) * oldValue + (_evaporation * fitness)
 		// The new value is assigned only if it is higher than _initTau
 		for (unsigned i = 0; i < numObjs; i++) {
-			...
+			double oldvalue = _phMatrix.at(i)->at(_bestSolution->whereIsObject(i));
+			double newvalue = (1 - _evaporation)*oldvalue + _evaporation*fitness;
+
+			if(newvalue > _initTau){
+				_phMatrix.at(i)->at(_bestSolution->whereIsObject(i)) = newvalue;
+			}
 		}
 	}
 
@@ -522,13 +541,14 @@ public:
 		_bestSolution->setFitness(fitness);
 
 
-		//TODO Generation of the ants: create empty ants (using the constructor) and include them in _ants
+		// Generation of the ants: create empty ants (using the constructor) and include them in _ants
+		//MQKPAnt *auxiliarAnt=new MQKPAnt(candidateListSize, this);//MQKPAnt(unsigned candidateListSize, MQKPAntColonyOpt *colony)
 		for (unsigned i = 0; i < numAnts; i++) {
-			...
+			_ants.push_back(new MQKPAnt(candidateListSize, this));
 		}
 
 
-		//TODO Initialization of the pheromone matrix by using _initTau
+		// Initialization of the pheromone matrix by using _initTau
 		unsigned numObjs = _instance->getNumObjs();
 		unsigned numKnapsacks = _instance->getNumKnapsacks() + 1;
 
@@ -537,7 +557,7 @@ public:
 			_phMatrix.push_back(aVector);
 
 			for (unsigned j = 0; j < numKnapsacks; j++) {
-				aVector->push_back(...); //Use _initTau
+				aVector->push_back(_initTau); //Use _initTau
 			}
 		}
 	}
@@ -553,9 +573,9 @@ public:
 			exit(1);
 		}
 
-		//TODO While the stop condition is not met, call to the iterate method
+		// While the stop condition is not met, call to the iterate method
 		while (stopCondition.reached() == false) {
-			...
+			iterate();
 			stopCondition.notifyIteration();
 		}
 	}
