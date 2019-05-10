@@ -13,6 +13,7 @@ private:
 		double _annealingFactor;
 		unsigned _itsPerAnnealing;
 		MSPSolution *_solution;
+		MSPSolution _bestSolution;
 		MSPInstance *_instance;
 		std::vector<double> _results;
 		bool accept(double deltafitness);
