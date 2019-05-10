@@ -1,6 +1,6 @@
-#include "MSPSimulatedAnnealing.h"
-#include "MSPSolution.h"
-#include "MSPRandomSolution.h"
+#include <MSPSimulatedAnnealing.h>
+#include <MSPSolution.h>
+#include <MSPRandomSolution.h>
 #include <MSPInstance.h>
 #include <cmath>
 #include <iostream>

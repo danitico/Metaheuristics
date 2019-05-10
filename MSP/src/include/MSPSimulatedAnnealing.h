@@ -4,7 +4,7 @@
 #include <vector>
 #include <MSPSolution.h>
 #include <MSPInstance.h>
-#include "MSPStopCondition.h"
+#include <MSPStopCondition.h>
 #include <cstdlib>
 class MSPSimulatedAnnealing {
 private:

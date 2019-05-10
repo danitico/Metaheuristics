@@ -4,8 +4,8 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include "MSPSolution.h"
-#include "Clause.h"
+#include <MSPSolution.h>
+#include <Clause.h>
 
 class MSPInstance
 {

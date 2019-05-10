@@ -5,9 +5,9 @@
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
 //============================================================================
-#include "MSPInstance.h"
-#include "MSPSolution.h"
-#include "MSPRandomSolution.h"
+#include <MSPInstance.h>
+#include <MSPSolution.h>
+#include <MSPRandomSolution.h>
 #include <cstdlib>
 #include <iostream>
 using namespace std;

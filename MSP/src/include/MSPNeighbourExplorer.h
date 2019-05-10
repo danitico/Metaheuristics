@@ -7,7 +7,7 @@
 
 #ifndef MSPNEIGHBOUREXPLORER_H_
 #define MSPNEIGHBOUREXPLORER_H_
-#include "MSPChangeOperation.h"
+#include <MSPChangeOperation.h>
 
 class MSPNeighbourExplorer {
 public:

@@ -1,10 +1,11 @@
 #ifndef FIRSTIMPROVEMENT_H_
 #define FIRSTIMPROVEMENT_H_
 
-#include "MSPInstance.h"
-#include "MSPNeighbourExplorer.h"
+#include <MSPInstance.h>
+#include <MSPNeighbourExplorer.h>
 #include <vector>
-#include "MSPChangeOperation.h"
+#include <MSPChangeOperation.h>
+
 class FirstImprovement:public MSPNeighbourExplorer
 {
 public:

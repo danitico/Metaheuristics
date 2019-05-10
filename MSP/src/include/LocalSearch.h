@@ -7,11 +7,11 @@
 
 #ifndef LOCALSEARCH_H_
 #define LOCALSEARCH_H_
-#include "MSPInstance.h"
-#include "MSPSolution.h"
+#include <MSPInstance.h>
+#include <MSPSolution.h>
 #include <vector>
-#include "MSPNeighbourExplorer.h"
-#include "MSPChangeOperation.h"
+#include <MSPNeighbourExplorer.h>
+#include <MSPChangeOperation.h>
 
 class LocalSearch {
 private:
