@@ -5,7 +5,7 @@
  *      Author: chema969
  */
 
-#include "LocalSearch.h"
+#include <LocalSearch.h>
 
 LocalSearch::LocalSearch() {
 	// TODO Auto-generated constructor stub

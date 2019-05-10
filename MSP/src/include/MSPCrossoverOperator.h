@@ -1,5 +1,9 @@
 #ifndef MSPCROSSOVEROPERATOR_H_
 #define MSPCROSSOVEROPERATOR_H_
+#include <vector>
+
+#include <MSPInstance.h>
+#include <MSPSolution.h>
 
 class MSPCrossoverOperator
 {

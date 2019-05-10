@@ -3,7 +3,7 @@
 
 
 #include <Timer.h>
-#include "MSPInstance.h"
+#include <MSPInstance.h>
 
 class MSPStopCondition{
 

@@ -8,8 +8,8 @@
 #ifndef MSPRANDOMSOLUTION_H_
 #define MSPRANDOMSOLUTION_H_
 
-#include "MSPInstance.h"
-#include "MSPSolution.h"
+#include <MSPInstance.h>
+#include <MSPSolution.h>
 #include <cstdlib>
 class MSPRandomSolution {
 public:

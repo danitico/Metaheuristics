@@ -5,7 +5,7 @@
  *      Author: chema969
  */
 
-#include "MSPRandomSolution.h"
+#include <MSPRandomSolution.h>
 
 
 void MSPRandomSolution::genRandomSol(MSPInstance &instance, MSPSolution &solution){

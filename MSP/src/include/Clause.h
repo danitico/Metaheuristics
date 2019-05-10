@@ -9,7 +9,7 @@
 #define SRC_INCLUDE_CLAUSE_H_
 #include <set>
 
-#include "MSPSolution.h"
+#include <MSPSolution.h>
 
 class Clause {
 private:

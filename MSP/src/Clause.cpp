@@ -5,7 +5,7 @@
  *      Author: chema969
  */
 
-#include "Clause.h"
+#include <Clause.h>
 #include <iostream>
 Clause::Clause(){
 	//  Auto-generated constructor stub

@@ -7,7 +7,7 @@
 
 #ifndef MSPCHANGEOPERATION_H_
 #define MSPCHANGEOPERATION_H_
-#include "MSPSolution.h"
+#include <MSPSolution.h>
 class MSPChangeOperation {
 private:
 	double _deltaFitness ;

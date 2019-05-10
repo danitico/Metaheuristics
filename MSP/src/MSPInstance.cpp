@@ -1,11 +1,11 @@
-#include "MSPInstance.h"
+#include <MSPInstance.h>
 #include <vector>
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <cstdlib>
-#include "MSPSolution.h"
-#include "Clause.h"
+#include <MSPSolution.h>
+#include <Clause.h>
 
 MSPInstance::MSPInstance()
 {
