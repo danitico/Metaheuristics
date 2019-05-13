@@ -6,7 +6,6 @@
  */
 
 #include <MSPSolution.h>
-#include <MSPInstance.h>
 MSPSolution::MSPSolution(int numberOfLiterals) {
 	solution_.resize(numberOfLiterals+1);
 	numlits_=numberOfLiterals;

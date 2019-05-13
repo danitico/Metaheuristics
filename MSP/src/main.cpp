@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : aux.cpp
 // Author      : 
-// Version     :
+// Version     :d
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
 //============================================================================

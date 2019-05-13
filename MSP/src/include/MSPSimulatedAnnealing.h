@@ -5,8 +5,9 @@
 #include <MSPSolution.h>
 #include <MSPInstance.h>
 #include <MSPStopCondition.h>
+#include <MSPMetaheuristic.h>
 #include <cstdlib>
-class MSPSimulatedAnnealing {
+class MSPSimulatedAnnealing : public MSPMetaheuristic{
 private:
 	double _T;
 		double _initialProb;
@@ -40,7 +41,7 @@ public:
 			void initialise(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
 			std::vector<double>& getResults() {
 					return _results;
-				}
+				}/**/
 };
 
 #endif /* SRC_INCLUDE_MSPSOLUTION_H_ */

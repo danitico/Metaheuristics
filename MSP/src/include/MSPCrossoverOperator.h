@@ -29,7 +29,7 @@ class MSPCrossoverOperator
 	 *         this method to manage this memory correctly.
 	 */
 	MSPSolution * cross(MSPSolution *s1, MSPSolution *s2) {
-		MSPSolution * sol = new MSPSolution(*_instance);
+		MSPSolution * sol = new MSPSolution(*_instance->getNumberOfLiterals());
 		MSPSolution * sol1 = (MSPSolution *) s1;
 		MSPSolution * sol2 = (MSPSolution *) s2;
 

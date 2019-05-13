@@ -9,6 +9,7 @@
 #define SRC_INCLUDE_MSPSOLUTION_H_
 
 #include <vector>
+
 class MSPSolution {
 private:
 	std::vector<bool> solution_;
