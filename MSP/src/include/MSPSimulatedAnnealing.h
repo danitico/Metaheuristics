@@ -4,7 +4,7 @@
 #include <vector>
 #include <MSPSolution.h>
 #include <MSPInstance.h>
-#include <MSPStopCondition.h>
+#include "MSPStopCondition.h"
 #include <cstdlib>
 class MSPSimulatedAnnealing {
 private:
@@ -17,6 +17,7 @@ private:
 		MSPInstance *_instance;
 		std::vector<double> _results;
 		bool accept(double deltafitness);
+		void initialize(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
 public:
 
 			MSPSimulatedAnnealing(){
@@ -26,6 +27,7 @@ public:
 				_itsPerAnnealing = 0;
 				_solution = NULL;
 				_instance = NULL;
+				_bestSolution=NULL;
 			}
 
 

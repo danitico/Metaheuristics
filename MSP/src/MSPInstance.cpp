@@ -68,7 +68,7 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 	}
 }
 
-double MSPInstance::getDeltaFitness(const MSPSolution &solucion, int pos){
+double MSPInstance::getDeltaFitness( const MSPSolution &solucion, int pos){
 	double fitnessDiference=0.0;
 	if(!solucion.isTrue(pos)){
 		for(int i=0;i<nClauses_;i++){

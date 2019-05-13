@@ -26,9 +26,9 @@ void MSPSimulatedAnnealing::setSolution(MSPSolution* solution) {
 		_bestSolution = new MSPSolution(*_instance);
 	}
 
-	_bestSolution->copy(*solution);
+	_bestSolution.copy(*solution);
 }
-void MQKPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
+void MSPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 
 	if (_T <= 0 || _annealingFactor <= 0){
 		cerr << "Simulated annealing has not been initialised" << endl;
@@ -42,7 +42,6 @@ void MQKPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 
 	_results.clear();
 	unsigned numObjs = _instance->getNumberOfLiterals();
-	unsigned numKnapsacks = _instance->getNumberOfClauses();
 	unsigned numIterations = 0;
 
 	/**
@@ -56,15 +55,14 @@ void MQKPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 	 *      then you should decrease the temperature
 	 */
 	while (stopCondition.reached()==false){
-		int indexObject = rand() % numObjs;
-		int indexKnapsack = rand() % (numKnapsacks+1);
-		double deltaFitness =MQKPEvaluator::computeDeltaFitness(*_instance,*_solution,indexObject,indexKnapsack);
+		int indexLiteral = rand() % numObjs;
+		double deltaFitness =_instance->getDeltaFitness(*_solution,indexLiteral);
 		if (this->accept(deltaFitness) == true){
-			_solution->putObjectIn(indexObject, indexKnapsack);
+			_solution->setBool(indexLiteral, true);
 			_solution->setFitness(_solution->getFitness() + deltaFitness);
 
-			if (MQKPEvaluator::compare(_solution->getFitness(), _bestSolution->getFitness()) > 0){
-				_bestSolution->copy(*_solution);
+			if (_solution->getFitness()> _bestSolution.getFitness()){
+				_bestSolution.copy(*_solution);
 			}
 		}
 		numIterations++;
@@ -76,4 +74,63 @@ void MQKPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 
 		stopCondition.notifyIteration();
 	}
+}
+bool MSPSimulatedAnnealing::accept(double deltaFitness) {
+	/**
+	 *
+	 * Obtain the probability of accepting a change, which is the exponential of
+	 * (difference of fitness divided by the temperature)
+	 * Generate a random number between 0 and 1
+	 * Return true if the random number is lower than the acceptance probability
+	 *
+	 * (Think about what happens when the difference of fitness is positive and when
+	 *  the difference of fitness is negative. You should use the isToBeMinisedMethod
+	 *  to interpret correctly the auxDeltaFitness, if the problem is minimization, then
+	 *  a negative difference of fitness is good)
+	 */
+	double auxDeltaFitness = deltaFitness;
+
+	double prob = exp(auxDeltaFitness/_T);
+	double randSample = (((double)rand()) /RAND_MAX);
+
+	if(randSample<prob){
+		return true;
+	}
+	else{
+		return false;
+	}
+
+}
+void MSPSimulatedAnnealing::initialise(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance) {
+	_initialProb = initialProb;
+	_annealingFactor = annealingFactor;
+	_instance = &instance;
+	_itsPerAnnealing = itsPerAnnealing;
+	unsigned numObjs = _instance->getNumberOfLiterals();
+	double averageFDiffs = 0.;
+
+	/**
+	 * Initialize the temperature:
+	 * - For this, you will have to generate some random solutions and the indices for changes to
+	 *   random neighboring solutions
+	 * - You will have to obtain the average difference of fitness for changes to worse solutions
+	 * - Then, you will have to derive the initial temperature from the equation used for accepting
+	 *   worse solutions
+	 */
+
+	for (int i = 0; i < numInitialEstimates; i++){
+		MSPSolution sol(instance);
+		MSPRandomSolution::genRandomSol(instance, sol);
+		sol.setFitness(_instance->computeFitness(sol));
+		int indexObject = rand() % numObjs;
+		double deltaFitness =_instance->getDeltaFitness(sol, indexObject);
+		averageFDiffs += max(fabs(deltaFitness),10.);
+		//There is a minimum difference of 10 to avoid fitness changes too small
+		//(for example, when a knapsack is modified and it is not the one leading to
+		// maximum violation) (this method could be improved)
+	}
+
+	averageFDiffs /= numInitialEstimates;
+
+	_T = -1. * averageFDiffs / log(initialProb);
 }
