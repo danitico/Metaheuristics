@@ -14,9 +14,11 @@ private:
 		double _annealingFactor;
 		unsigned _itsPerAnnealing;
 		MSPSolution *_solution;
+		MSPSolution _bestSolution;
 		MSPInstance *_instance;
 		std::vector<double> _results;
 		bool accept(double deltafitness);
+		void initialize(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
 public:
 
 			MSPSimulatedAnnealing(){
@@ -26,6 +28,7 @@ public:
 				_itsPerAnnealing = 0;
 				_solution = NULL;
 				_instance = NULL;
+				_bestSolution=NULL;
 			}
 
 

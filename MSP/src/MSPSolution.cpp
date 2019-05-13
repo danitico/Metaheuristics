@@ -26,12 +26,9 @@ MSPSolution::~MSPSolution() {
  bool MSPSolution::isTrue(int pos) const{
 	return solution_[pos];
 }
- void MSPSolution::copy(MSPSolution& solution) {
-	 int literals=getNumberOfLiterals();
+void MSPSolution::copy(MSPSolution &solution) {
+	for (int i = 0; i < numlits_; i++)
+		solution_[i] = solution.solution_[i];
 
- 	for (int i = 0; i < literals ; i++){
- 		bool val= solution.isTrue(i);
- 		solution_[i] = val;
- 	}
- 	fitness_ = solution.fitness_;
- }
+	fitness_ = solution.fitness_;
+  }
