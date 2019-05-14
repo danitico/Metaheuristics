@@ -23,10 +23,10 @@ void MSPSimulatedAnnealing::setSolution(MSPSolution* solution) {
 	this->_solution = solution;
 
 	if (_bestSolution == NULL){
-		_bestSolution = new MSPSolution(*_instance);
+		_bestSolution = new MSPSolution(_instance->getNumberOfLiterals());
 	}
 
-	_bestSolution.copy(*solution);
+	_bestSolution->copy(*solution);
 }
 void MSPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 
@@ -61,8 +61,8 @@ void MSPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 			_solution->setBool(indexLiteral, true);
 			_solution->setFitness(_solution->getFitness() + deltaFitness);
 
-			if (_solution->getFitness()> _bestSolution.getFitness()){
-				_bestSolution.copy(*_solution);
+			if (_solution->getFitness() > _bestSolution->getFitness()){
+				_bestSolution->copy(*_solution);
 			}
 		}
 		numIterations++;
@@ -119,7 +119,7 @@ void MSPSimulatedAnnealing::initialise(double initialProb, int numInitialEstimat
 	 */
 
 	for (int i = 0; i < numInitialEstimates; i++){
-		MSPSolution sol(instance);
+		MSPSolution sol(instance.getNumberOfLiterals());
 		MSPRandomSolution::genRandomSol(instance, sol);
 		sol.setFitness(_instance->computeFitness(sol));
 		int indexObject = rand() % numObjs;

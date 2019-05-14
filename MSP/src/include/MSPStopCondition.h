@@ -4,6 +4,7 @@
 
 #include <Timer.h>
 #include <MSPInstance.h>
+#include <MSPEvaluator.h>
 
 class MSPStopCondition{
 
@@ -31,7 +32,7 @@ public:
 	virtual bool reached(){
 		bool result = false;
 
-		if (_maxEvaluations > 0 && MSPInstance::getNumEvaluations() >= _maxEvaluations)
+		if (_maxEvaluations > 0 && MSPEvaluator::getNumEvaluations() >= _maxEvaluations)
 			result = true;
 
 		if (_maxIterations > 0 && _numIterations >= _maxIterations)

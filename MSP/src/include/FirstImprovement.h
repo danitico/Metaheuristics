@@ -9,8 +9,8 @@
 class FirstImprovement:public MSPNeighbourExplorer
 {
 public:
-	FirstImprovement();
-	virtual ~FirstImprovement();
+//	FirstImprovement();
+//	virtual ~FirstImprovement();
 	virtual bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation);
 
 };

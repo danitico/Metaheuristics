@@ -1,13 +1,12 @@
 #include <BestImprovement.h>
 
-BestImprovement::BestImprovement()
-{
-}
-
-BestImprovement::~BestImprovement()
-{
-}
-
+//BestImprovement::BestImprovement()
+//{
+//}
+//
+//BestImprovement::~BestImprovement()
+//{
+//}
 bool BestImprovement::findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation) {
 
 		//Create a permutation of the indices of the objects and initialize some variables
@@ -26,7 +25,7 @@ bool BestImprovement::findOperation(MSPInstance& instance,MSPSolution& solution,
 					initialised = true;
 					bestDeltaFitness = deltaFitness;
 				}
-			}
+		}
 		if (bestDeltaFitness > 0)
 			return true;
 		else

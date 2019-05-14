@@ -29,7 +29,7 @@ class MSPCrossoverOperator
 	 *         this method to manage this memory correctly.
 	 */
 	MSPSolution * cross(MSPSolution *s1, MSPSolution *s2) {
-		MSPSolution * sol = new MSPSolution(*_instance->getNumberOfLiterals());
+		MSPSolution * sol = new MSPSolution(_instance->getNumberOfLiterals());
 		MSPSolution * sol1 = (MSPSolution *) s1;
 		MSPSolution * sol2 = (MSPSolution *) s2;
 
@@ -63,15 +63,15 @@ public:
 		_numliterals=instance.getNumberOfLiterals();
 		_crossProb = crossProb;
 	}
-	
+
 	virtual ~MSPCrossoverOperator();
-	void cross(vector<MSPSolution*> &parents, vector<MSPSolution*> &offspring) {
+	void cross(std::vector<MSPSolution*> &parents, std::vector<MSPSolution*> &offspring) {
 
 			unsigned numParents = (unsigned) parents.size();
 
 			//Apply crossover considering every two consecutive pairs (1,2), (3,4)...
 			for (unsigned i=0; i < numParents; i+=2) {
-				MQKPSolution *sol = cross(parents[i], parents[i+1]);
+				MSPSolution *sol = cross(parents[i], parents[i+1]);
 				offspring.push_back(sol);
 			}
 	}	

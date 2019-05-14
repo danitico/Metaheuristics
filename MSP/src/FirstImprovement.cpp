@@ -1,12 +1,12 @@
 #include <FirstImprovement.h>
 #include <MSPNeighbourExplorer.h>
-FirstImprovement::FirstImprovement()
-{
-}
-
-FirstImprovement::~FirstImprovement()
-{
-}
+//FirstImprovement::FirstImprovement()
+//{
+//}
+//
+//FirstImprovement::~FirstImprovement()
+//{
+//}
 
 bool FirstImprovement::findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation) {
 
