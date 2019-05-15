@@ -10,6 +10,7 @@ MSPSolution::MSPSolution(int numberOfLiterals) {
 	solution_.resize(numberOfLiterals+1);
 	numlits_=numberOfLiterals;
 	fitness_=0;
+	_fitnessAssigned=false; //TODO READ This variable has been included to know which individuals have a fitness assigned
 	// Auto-generated constructor stub
 
 }
