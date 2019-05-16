@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
     	srand(seeds[r]);seeds[r]+=rand()%100; r=(r+1)%numSeeds;
     	MSPRandomSolution::genRandomSol(instance, solution);
     	double newsol=instance.computeFitness(solution);
+
     	if(newsol>sol){
     		bestSolution=solution;
     		sol=newsol;

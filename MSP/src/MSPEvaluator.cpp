@@ -19,23 +19,9 @@ double MSPEvaluator::computeFitness(MSPInstance &instance, MSPSolution &solution
 double MSPEvaluator::computeDeltaFitness(MSPInstance& instance,
 		MSPSolution& solution, int position) {
 
-	_numEvaluations += (1. / instance.getNumberOfLiterals());//TODO Preguntar sobre esto
+	_numEvaluations += (1. / instance.getNumberOfLiterals());
 
-	double actualSumProfits = instance.computeFitness(solution);
-	double deltaSumProfits = instance.getDeltaFitness(solution, position);
-	double newSumProfits = actualSumProfits + deltaSumProfits;
-
-	//TODO Preguntar :3
-//	if (actualMaxViolation > 0 && newMaxViolation > 0){
-//		return (-1.) * deltaMaxCapacityViolation;
-//	} else if (actualMaxViolation <= 0 && newMaxViolation <= 0){
-//		return deltaSumProfits;
-//	} else if (actualMaxViolation > 0){
-//		return (newSumProfits - deltaMaxCapacityViolation);
-//	} else {
-//		return (-1.) * (actualSumProfits + newMaxViolation);
-//	}
-	return 0.;
+	return instance.getDeltaFitness(solution, position);
 }
 
 void MSPEvaluator::resetNumEvaluations() {
