@@ -21,6 +21,9 @@ public:
 	LocalSearch();
 	virtual ~LocalSearch();
 	void optimise(MSPInstance &instance, MSPNeighbourExplorer &explorer, MSPSolution &solution);
+	std::vector<double>& getResults() {
+			return _results;
+		}
 };
 
 #endif /* LOCALSEARCH_H_ */
