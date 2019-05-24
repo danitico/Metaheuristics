@@ -67,42 +67,26 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 	}
 }
 
-double MSPInstance::getDeltaFitness( const MSPSolution &solucion, int pos){
-	double fitnessDiference=0.0;
-	if(!solucion.isTrue(pos)){
-		for(int i=0;i<nClauses_;i++){
-			/*If the clause has the new boolean value and that clause used to be not fulfilled, now it is*/
-			if(instancesVector_[i].has(-pos)){
-				if(!instancesVector_[i].isTrue(solucion)){
-					fitnessDiference++;
-				}
-			}
-			/*If the clause has the old boolean value it can change to be not fulfilled*/
-			if(instancesVector_[i].has(pos)){
-				if(!instancesVector_[i].isTrue(solucion)){
-					fitnessDiference--;
-				}
-			}
-		}
-	}
-	else{
-			for(int i=0;i<nClauses_;i++){
-				/*If the clause has the new boolean value and that clause used to be not fulfilled, now it is*/
-				if(instancesVector_[i].has(pos)){
-					if(!instancesVector_[i].isTrue(solucion)){
-						fitnessDiference++;
-					}
-				}
-				/*If the clause has the old boolean value it can change to be not fulfilled*/
-				if(instancesVector_[i].has(-pos)){
-					if(!instancesVector_[i].isTrue(solucion)){
-						fitnessDiference--;
-					}
-				}
-			}
-		}
+double MSPInstance::getDeltaFitness(MSPSolution &solucion, int pos){
+	double fitnessDifference=0.0;
 
-	return fitnessDiference;
+	bool oldValue=solucion.isTrue(pos);
+	double fit=solucion.getFitness();
+			if(oldValue==false)
+			{
+				solucion.setBool(pos,true);
+				double newFit=computeFitness(solucion);
+				fitnessDifference=newFit-fit;
+				solucion.setBool(pos,false);
+			}
+			else
+			{
+				solucion.setBool(pos,false);
+				double newFit=computeFitness(solucion);
+				fitnessDifference=newFit-fit;
+				solucion.setBool(pos,true);
+			}
+	return fitnessDifference;
 }
 
 
