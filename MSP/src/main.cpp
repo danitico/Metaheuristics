@@ -85,6 +85,7 @@ void runFirstImprovement(MSPInstance instance, MSPSolution solution){
 	while(t.elapsed_time(Timer::VIRTUAL) <= MAX_SECONS_PER_RUN
 			&& MSPEvaluator::getNumEvaluations() < MAX_SOLUTIONS_PER_RUN &&
 			numInitialSolutions < MAX_INITIAL_SOLUTIONS){
+
 		MSPRandomSolution::genRandomSol(instance, solution);
 		currentSolution = instance.computeFitness(solution);
 
@@ -114,10 +115,20 @@ int main(int argc, char** argv) {
 		std::cout<<"You must include at least one instance file"<<std::endl;
 		return 0;
 	}
+	vector<double> *current = new vector<double>();
+	vector<double> *best = new vector<double>();
+
 	MSPInstance instance;
 	instance.readInstance(argv[1]);
 	MSPSolution solution(instance.getNumberOfLiterals());
 
 //	runRandomFunction(instance, solution);
-	runFirstImprovement(instance, solution);
+
+	runSimulatedAnnealing(*current, *best, instance);
+
+	for(unsigned i=0; i < current->size(); i++){
+		std::cout << current->at(i) << " " << best->at(i) << std::endl;
+	}
+
+//	runFirstImprovement(instance, solution);
 }

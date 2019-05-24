@@ -1,5 +1,6 @@
 #include <FirstImprovement.h>
 #include <MSPNeighbourExplorer.h>
+#include <iostream>
 //FirstImprovement::FirstImprovement()
 //{
 //}
@@ -23,7 +24,8 @@ bool FirstImprovement::findOperation(MSPInstance& instance,MSPSolution& solution
 			return true;
 		}
 	}
-		
 
+
+		
 	return false;
 }
