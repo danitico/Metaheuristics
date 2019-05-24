@@ -1,14 +1,6 @@
 #include <FirstImprovement.h>
 #include <MSPNeighbourExplorer.h>
 #include <iostream>
-//FirstImprovement::FirstImprovement()
-//{
-//}
-//
-//FirstImprovement::~FirstImprovement()
-//{
-//}
-
 bool FirstImprovement::findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation) {
 
 	//Create a permutation of the indices of the objects and initialize some variables

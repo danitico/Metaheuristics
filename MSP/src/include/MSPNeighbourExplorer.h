@@ -12,7 +12,7 @@
 
 class MSPNeighbourExplorer {
 public:
-//	virtual ~MSPNeighbourExplorer() = 0;
+	virtual ~MSPNeighbourExplorer() {};
 	virtual bool findOperation(MSPInstance &instance, MSPSolution &solution, MSPChangeOperation &operation) = 0;
 };
 

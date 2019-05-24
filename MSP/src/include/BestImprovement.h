@@ -8,9 +8,13 @@
 class BestImprovement:public MSPNeighbourExplorer
 {
 public:
-//	BestImprovement();
-//	virtual ~BestImprovement();
-	virtual bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation);
+	BestImprovement(){
+
+	}
+	~BestImprovement(){
+
+	}
+	bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation);
 
 };
 

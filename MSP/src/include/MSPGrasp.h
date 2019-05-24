@@ -13,7 +13,7 @@ using namespace std;
 
 /**
  * Class implementing the GRASP metaheuristic, in the variant of constructing a greedy
- * solution by selecting the best option between a series of alternative random
+ * solution by selecting the dbest option between a series of alternative random
  * solutions
  */
 class MSPGrasp : public MSPMetaheuristic{
@@ -70,7 +70,7 @@ public:
 	/**
 	 * Destructor
 	 */
-	virtual ~MSPGrasp(){
+	~MSPGrasp(){
 
 		if (_bestSolution != NULL){
 			delete _bestSolution;
@@ -97,7 +97,7 @@ public:
 	 * Function which runs the metaheuristic until reaching the stop condition
 	 * @param[in] stopCondition Stop condition of the metaheuristic
 	 */
-	virtual void run(MSPStopCondition &stopCondition);
+	void run(MSPStopCondition &stopCondition);
 
 	/**
 	 * Function returning the array with the results of the solutions accepted, in each step,
