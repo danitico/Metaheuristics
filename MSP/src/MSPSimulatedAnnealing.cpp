@@ -56,10 +56,19 @@ void MSPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 	 */
 	while (stopCondition.reached()==false){
 		int indexLiteral = rand() % numObjs;
+		bool oldValue=_solution->isTrue(indexLiteral);
+
 		double deltaFitness =_instance->getDeltaFitness(*_solution,indexLiteral);
 		if (this->accept(deltaFitness) == true){
+			if(oldValue==false){
 			_solution->setBool(indexLiteral, true);
 			_solution->setFitness(_solution->getFitness() + deltaFitness);
+			}
+			if(oldValue==true)
+			{
+				_solution->setBool(indexLiteral, false);
+				_solution->setFitness(_solution->getFitness() + deltaFitness);
+			}
 
 			if (_solution->getFitness() > _bestSolution->getFitness()){
 				_bestSolution->copy(*_solution);

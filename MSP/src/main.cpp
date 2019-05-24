@@ -1,6 +1,9 @@
 #include <MSPInstance.h>
 #include <MSPSolution.h>
 #include <MSPRandomSolution.h>
+#include<MSPSimulatedAnnealing.h>
+#include<MSPStopCondition.h>
+#include<MSPEvaluator.h>
 #include <cstdlib>
 #include <iostream>
 using namespace std;
@@ -27,7 +30,38 @@ void runRandomFunction(MSPInstance instance, MSPSolution solution){
     	std::cout<<currentsol<<" "<<Bestsol<<std::endl;
     }
 }
+void runSimulatedAnnealing(vector<double> &currentResults,
+		vector<double> &bestSoFarResults, MSPInstance &instance) {
 
+	//Initialization
+	MSPSolution initialSolution(instance.getNumberOfLiterals());
+	MSPSimulatedAnnealing sa;
+	MSPStopCondition stopCond;
+	MSPEvaluator::resetNumEvaluations();
+	sa.initialise(0.9, 10, 0.9999, 50, instance);
+	stopCond.setConditions(100000, 0, 5);
+
+	//Generate a first random solution
+	MSPRandomSolution::genRandomSol(instance, initialSolution);
+	double currentFitness = MSPEvaluator::computeFitness(instance,
+			initialSolution);
+	initialSolution.setFitness(currentFitness);
+	double bestFitness = currentFitness;
+	currentResults.push_back(currentFitness);
+	bestSoFarResults.push_back(bestFitness);
+	sa.setSolution(&initialSolution);
+
+	//Apply SA
+	sa.run(stopCond);
+
+	//Store the results
+	vector<double> &resultsSA = sa.getResults();
+
+	for (auto aResult : resultsSA) {
+		currentResults.push_back(aResult);
+		bestSoFarResults.push_back(max(bestSoFarResults.back(), aResult));
+	}
+}
 int main(int argc, char** argv) {
 	if(argc<2){
 		std::cout<<"You must include at least one instance file"<<std::endl;
@@ -37,6 +71,6 @@ int main(int argc, char** argv) {
 	instance.readInstance(argv[1]);
 	MSPSolution solution(instance.getNumberOfLiterals());
 
-	runRandomFunction();
+	runRandomFunction(instance,solution);
 
 }
