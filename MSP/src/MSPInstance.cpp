@@ -72,20 +72,21 @@ double MSPInstance::getDeltaFitness(MSPSolution &solucion, int pos){
 
 	bool oldValue=solucion.isTrue(pos);
 	double fit=solucion.getFitness();
-			if(oldValue==false)
-			{
-				solucion.setBool(pos,true);
-				double newFit=computeFitness(solucion);
-				fitnessDifference=newFit-fit;
-				solucion.setBool(pos,false);
-			}
-			else
-			{
-				solucion.setBool(pos,false);
-				double newFit=computeFitness(solucion);
-				fitnessDifference=newFit-fit;
-				solucion.setBool(pos,true);
-			}
+	std::cout << fit << std::endl;
+	if(oldValue==false)
+	{
+		solucion.setBool(pos,true);
+		double newFit=computeFitness(solucion);
+		fitnessDifference=newFit-fit;
+		solucion.setBool(pos,false);
+	}
+	else
+	{
+		solucion.setBool(pos,false);
+		double newFit=computeFitness(solucion);
+		fitnessDifference=newFit-fit;
+		solucion.setBool(pos,true);
+	}
 	return fitnessDifference;
 }
 
