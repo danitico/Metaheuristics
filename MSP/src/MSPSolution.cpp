@@ -15,6 +15,13 @@ MSPSolution::MSPSolution(int numberOfLiterals) {
 
 }
 
+MSPSolution::MSPSolution(const MSPSolution &copy){
+	solution_ = copy.solution_;
+	numlits_=copy.numlits_;
+	fitness_=copy.fitness_;
+	_fitnessAssigned = copy._fitnessAssigned;
+}
+
 MSPSolution::~MSPSolution() {
 	solution_.resize(0);
 	// Auto-generated destructor stub

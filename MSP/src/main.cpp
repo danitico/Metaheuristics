@@ -82,6 +82,7 @@ void runFirstImprovement(vector<double> &currentResults,
 		vector<double> &bestSoFarResults, MSPInstance &instance,
 		MSPNeighbourExplorer &explorer) {
 
+	srand(seeds[0]);
 	//Initialization
 	LocalSearch ls;
 	MSPSolution initialSolution(instance.getNumberOfLiterals());
@@ -107,7 +108,7 @@ void runFirstImprovement(vector<double> &currentResults,
 
 		MSPRandomSolution::genRandomSol(instance, initialSolution);
 
-		currentFitness = initialSolution.getFitness();
+		currentFitness = MSPEvaluator::computeFitness(instance, initialSolution);
 
 		currentResults.push_back(currentFitness);
 		bestSoFarResults.push_back(

@@ -70,22 +70,22 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 double MSPInstance::getDeltaFitness(MSPSolution &solucion, int pos){
 	double fitnessDifference=0.0;
 
-	bool oldValue=solucion.isTrue(pos);
-	double fit=solucion.getFitness();
-	std::cout << fit << std::endl;
+	MSPSolution *a = new MSPSolution(solucion);
+
+	bool oldValue=a->isTrue(pos);
+	double fit=a->getFitness();
+//	std::cout << fit << std::endl;
 	if(oldValue==false)
 	{
-		solucion.setBool(pos,true);
-		double newFit=computeFitness(solucion);
+		a->setBool(pos,true);
+		double newFit=computeFitness(*a);
 		fitnessDifference=newFit-fit;
-		solucion.setBool(pos,false);
 	}
 	else
 	{
-		solucion.setBool(pos,false);
-		double newFit=computeFitness(solucion);
+		a->setBool(pos,false);
+		double newFit=computeFitness(*a);
 		fitnessDifference=newFit-fit;
-		solucion.setBool(pos,true);
 	}
 	return fitnessDifference;
 }

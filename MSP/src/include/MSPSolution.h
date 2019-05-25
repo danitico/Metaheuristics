@@ -18,6 +18,7 @@ private:
 	bool _fitnessAssigned; //This variable has been included to know which individuals have a fitness assigned
 public:
 	MSPSolution(int numberOfLiterals);
+	MSPSolution(const MSPSolution &copy);
 	virtual ~MSPSolution();
 	bool isTrue(int pos) const;
 	void setBool(int i,bool v);
