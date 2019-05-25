@@ -11,6 +11,7 @@
 #include <LocalSearch.h>
 #include <FirstImprovement.h>
 #include <BestImprovement.h>
+#include <MSPIteratedGreedy.h>
 using namespace std;
 extern unsigned int numSeeds;
 extern unsigned int seeds[];
@@ -193,6 +194,38 @@ void runGrasp(vector<double> &currentResults,
 	}
 }
 
+void runIteratedGreedy(vector<double> &currentResults,
+		vector<double> &bestSoFarResults, MSPInstance &instance) {
+
+	//Initialization
+	MSPSolution initialSolution(instance.getNumberOfLiterals());
+	MSPIteratedGreedy ig;
+	MSPStopCondition stopCond;
+	MSPEvaluator::resetNumEvaluations();
+	ig.initialise(0.25, instance);
+	stopCond.setConditions(MAX_SOLUTIONS_PER_RUN, 0, MAX_SECONS_PER_RUN);
+
+	//Generate a first random solution
+	MSPRandomSolution::genRandomSol(instance, initialSolution);
+	double currentFitness = MSPEvaluator::computeFitness(instance,
+			initialSolution);
+	initialSolution.setFitness(currentFitness);
+	double bestFitness = currentFitness;
+	currentResults.push_back(currentFitness);
+	bestSoFarResults.push_back(bestFitness);
+
+	//Apply IG
+	ig.run(stopCond);
+
+	//Store the results
+	vector<double> &resultsIG = ig.getResults();
+
+	for (auto aResult : resultsIG) {
+		currentResults.push_back(aResult);
+		bestSoFarResults.push_back(max(bestSoFarResults.back(), aResult));
+	}
+}
+
 int main(int argc, char** argv) {
 	if(argc<2){
 		std::cout<<"You must include at least one instance file"<<std::endl;
@@ -213,10 +246,10 @@ int main(int argc, char** argv) {
 //	runSimulatedAnnealing(*current, *best, instance);
 //	FirstImprovement firstExplorer;
 
-	BestImprovement bestExplorer;
-	runLS(*current, *best, instance, bestExplorer);
+//	BestImprovement bestExplorer;
+//	runLS(*current, *best, instance, bestExplorer);
 
-//
+//	runIteratedGreedy(*current, *best, instance);
 	for(unsigned i=0; i < current->size(); i++){
 		std::cout << current->at(i) << " " << best->at(i) << std::endl;
 	}
