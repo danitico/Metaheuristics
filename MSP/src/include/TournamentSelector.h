@@ -44,7 +44,7 @@ protected:
 		MSPSolution* best=set[rand()%set.size()];
 		for(unsigned i=0;i<_k-1;i++){
 			MSPSolution* aux=set[rand()%set.size()];
-			if(aux->getFitness()>best->getFitness()){
+			if(MSPEvaluator::compare(aux->getFitness(), best->getFitness()) > 0){
 				best=aux;
 			}
 		}
@@ -64,7 +64,7 @@ public:
 	/**
 	 * Destructor
 	 */
-	virtual ~TournamentSelector(){}
+	~TournamentSelector(){}
 
 	/**
 	 * Function which select as many pairs of parents from a vector as the number of elements

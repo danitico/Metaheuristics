@@ -1,18 +1,15 @@
-#include <MSPInstance.h>
-#include <MSPSolution.h>
+#include <iostream>
+#include <macros.h>
+
 #include <MSPRandomSolution.h>
 #include <MSPSimulatedAnnealing.h>
-#include <MSPStopCondition.h>
 #include <MSPEvaluator.h>
 #include <MSPGrasp.h>
 #include <MSPTabuSearch.h>
-#include <cstdlib>
-#include <iostream>
-#include <LocalSearch.h>
-#include <FirstImprovement.h>
 #include <BestImprovement.h>
 #include <MSPIteratedGreedy.h>
 #include <MSPGeneticAlgorithm.h>
+
 using namespace std;
 extern unsigned int numSeeds;
 extern unsigned int seeds[];
@@ -227,32 +224,109 @@ void runIteratedGreedy(vector<double> &currentResults,
 	}
 }
 
+void runGeneticAlgorithm(vector<double> &currentResults,
+		vector<double> &bestSoFarResults, MSPInstance &instance) {
+
+	//Initialization
+	MSPGeneticAlgorithm ga;
+	MSPStopCondition stopCond;
+	MSPEvaluator::resetNumEvaluations();
+	ga.initialise(60, instance);
+	stopCond.setConditions(MAX_SOLUTIONS_PER_RUN, 0, MAX_SECONS_PER_RUN);
+
+	//Apply the GA
+	ga.run(stopCond);
+
+	//Store the results
+	vector<double> &resultsGA = ga.getResults();
+
+	for (double aResult : resultsGA) {
+		currentResults.push_back(aResult);
+
+		if (bestSoFarResults.size() > 0)
+			bestSoFarResults.push_back(max(bestSoFarResults.back(), aResult));
+		else
+			bestSoFarResults.push_back(aResult);
+	}
+}
+
 int main(int argc, char** argv) {
-	if(argc<2){
-		std::cout<<"You must include at least one instance file"<<std::endl;
+	if(argc!=3){
+		std::cout << BIRED << "Bad arguments" << RESET << std::endl;
+		std::cout << "HELP" << std::endl;
+		std::cout << "----" << std::endl;
+		std::cout << BIYELLOW << argv[0] << " <instance_file> " << "<no_algorithm>" << RESET << std::endl;
+		std::cout << std::endl << "Algorithms" << std::endl;
+		std::cout << "----------" << std::endl;
+		std::cout << BICYAN << "1 -> Random Search" << RESET << std::endl;
+		std::cout << BICYAN << "2 -> LS First Improvement" << RESET << std::endl;
+		std::cout << BICYAN << "3 -> LS Best Improvement" << RESET << std::endl;
+		std::cout << BICYAN << "4 -> Simulated Annealing" << RESET << std::endl;
+		std::cout << BICYAN << "5 -> Tabu Search" << RESET << std::endl;
+		std::cout << BICYAN << "6 -> Iterated Greedy" << RESET << std::endl;
+		std::cout << BICYAN << "7 -> GRASP" << RESET << std::endl;
+		std::cout << BICYAN << "8 -> Genetic Algorithm" << RESET << std::endl;
 		return 0;
 	}
+	int opcion = stoi(argv[2]);
+
 	vector<double> *current = new vector<double>();
 	vector<double> *best = new vector<double>();
 
 	MSPInstance instance;
 	instance.readInstance(argv[1]);
 
-//	runRandomFunction(*current, *best, instance);
+	switch (opcion) {
+		case 1:{
+			runRandomFunction(*current, *best, instance);
+		}
+		break;
 
-//	runTabuSearch(*current, *best, instance);
+		case 2:{
+			FirstImprovement firstExplorer;
+			runLS(*current, *best, instance, firstExplorer);
+		}
+		break;
 
-//	runGrasp(*current, *best, instance);
+		case 3:{
+			BestImprovement bestExplorer;
+			runLS(*current, *best, instance, bestExplorer);
+		}
+		break;
 
-//	runSimulatedAnnealing(*current, *best, instance);
-//	FirstImprovement firstExplorer;
+		case 4:{
+			runSimulatedAnnealing(*current, *best, instance);
+		}
+		break;
 
-//	BestImprovement bestExplorer;
-//	runLS(*current, *best, instance, bestExplorer);
+		case 5:{
+			runTabuSearch(*current, *best, instance);
+		}
+		break;
 
-//	runIteratedGreedy(*current, *best, instance);
+		case 6:{
+			runIteratedGreedy(*current, *best, instance);
+		}
+		break;
+
+		case 7:{
+			runGrasp(*current, *best, instance);
+		}
+		break;
+
+		case 8:{
+			runGeneticAlgorithm(*current, *best, instance);
+		}
+		break;
+
+		default:
+			std::cout << BIRED << "That algorithm does not exist" << RESET << std::endl;
+			return 0;
+	}
+
 	for(unsigned i=0; i < current->size(); i++){
 		std::cout << current->at(i) << " " << best->at(i) << std::endl;
 	}
 
+	return 0;
 }

@@ -64,7 +64,9 @@ public:
 		_crossProb = crossProb;
 	}
 
-	virtual ~MSPCrossoverOperator();
+	~MSPCrossoverOperator(){
+
+	}
 	void cross(std::vector<MSPSolution*> &parents, std::vector<MSPSolution*> &offspring) {
 
 			unsigned numParents = (unsigned) parents.size();
