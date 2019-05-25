@@ -12,6 +12,7 @@
 #include <FirstImprovement.h>
 #include <BestImprovement.h>
 #include <MSPIteratedGreedy.h>
+#include <MSPGeneticAlgorithm.h>
 using namespace std;
 extern unsigned int numSeeds;
 extern unsigned int seeds[];

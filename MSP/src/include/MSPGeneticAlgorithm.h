@@ -1,10 +1,3 @@
-/*
- * MSPGeneticAlgorithm.h
- *
- *  Created on: 15 may. 2019
- *      Author: chema969
- */
-
 #ifndef INCLUDE_MSPGENETICALGORITHM_H_
 #define INCLUDE_MSPGENETICALGORITHM_H_
 
@@ -190,9 +183,15 @@ protected:
 		 *  4. Include the solution in the population (done)
 		 */
 		for (unsigned i = 0; i < popSize; i++) {
-			MSPSolution *sol = new MSPSolution(*_instance);
+			MSPSolution *sol = new MSPSolution(_instance->getNumberOfLiterals());
 			MSPRandomSolution::genRandomSol(*_instance, *sol);
 			double fitness = MSPEvaluator::computeFitness(*_instance, *sol);
+
+			sol->setFitness(fitness);
+			if(MSPEvaluator::compare(sol->getFitness(),_bestSolution->getFitness()) > 0){
+				_bestSolution->copy(*sol);
+			}
+
 			_results.push_back(fitness);
 			_population.push_back(sol);
 		}
@@ -292,7 +291,7 @@ public:
 	 * @param[in] popSize Size of the population
 	 * @param[in] instance Instance of the problem to be considered
 	 */
-	void initialise(unsigned popSize, MSPSolution &instance) {
+	void initialise(unsigned popSize, MSPInstance &instance) {
 		_instance = &instance;
 
 		if (popSize <= 0) {
@@ -305,7 +304,7 @@ public:
 			_bestSolution = NULL;
 		}
 
-		_bestSolution = new MSPSolution(*_instance);
+		_bestSolution = new MSPSolution(_instance->getNumberOfLiterals());
 		MSPRandomSolution::genRandomSol(*_instance, *_bestSolution);
 		double fitness = MSPEvaluator::computeFitness(*_instance, *_bestSolution);
 		_bestSolution->setFitness(fitness);
