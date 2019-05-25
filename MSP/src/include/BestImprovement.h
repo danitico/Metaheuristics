@@ -3,7 +3,7 @@
 
 #include <MSPNeighbourExplorer.h>
 #include <vector>
-#include <MSPChangeOperation.h>
+#include <MSPBooleanChangeOperation.h>
 
 class BestImprovement:public MSPNeighbourExplorer
 {
@@ -14,7 +14,7 @@ public:
 	~BestImprovement(){
 
 	}
-	bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation);
+	bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPBooleanChangeOperation& operation);
 
 };
 

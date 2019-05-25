@@ -4,15 +4,15 @@
 #include <MSPInstance.h>
 #include <MSPNeighbourExplorer.h>
 #include <vector>
-#include <MSPChangeOperation.h>
+#include <MSPBooleanChangeOperation.h>
 
 class FirstImprovement:public MSPNeighbourExplorer
 {
 public:
-	virtual ~FirstImprovement(){
+	~FirstImprovement(){
 
 	}
-	bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation);
+	bool findOperation(MSPInstance& instance,MSPSolution& solution, MSPBooleanChangeOperation& operation);
 
 };
 

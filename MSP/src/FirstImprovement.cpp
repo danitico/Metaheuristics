@@ -1,7 +1,7 @@
 #include <FirstImprovement.h>
 #include <MSPNeighbourExplorer.h>
 #include <iostream>
-bool FirstImprovement::findOperation(MSPInstance& instance,MSPSolution& solution, MSPChangeOperation& operation) {
+bool FirstImprovement::findOperation(MSPInstance& instance,MSPSolution& solution, MSPBooleanChangeOperation& operation) {
 
 	//Create a permutation of the indices of the objects and initialize some variables
 	std::vector<int> perm;

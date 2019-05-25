@@ -11,7 +11,7 @@
 #include <MSPSolution.h>
 #include <vector>
 #include <MSPNeighbourExplorer.h>
-#include <MSPChangeOperation.h>
+#include <MSPBooleanChangeOperation.h>
 
 class LocalSearch {
 private:

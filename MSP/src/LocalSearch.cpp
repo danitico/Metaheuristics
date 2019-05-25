@@ -19,7 +19,7 @@ LocalSearch::~LocalSearch() {
 void LocalSearch::optimise(MSPInstance &instance, MSPNeighbourExplorer &explorer, MSPSolution &solution){
 	_results.clear();
 	_results.push_back(solution.getFitness());
-	MSPChangeOperation operation;
+	MSPBooleanChangeOperation operation;
 
 	explorer.findOperation(instance, solution, operation);
 

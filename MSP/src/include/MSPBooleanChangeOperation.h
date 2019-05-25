@@ -33,7 +33,7 @@ public:
 	 *                         provided that the solution has not changed since the object
 	 *                         of this class was created
 	 */
-	void setValues(int indexLiteral, double deltaFitness);
+	virtual void setValues(int indexLiteral, double deltaFitness);
 
 	/**
 	 * Function which returns the object considered by the operation
