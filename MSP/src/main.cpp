@@ -1,6 +1,5 @@
 #include <MSPInstance.h>
 #include <MSPSolution.h>
-#include <LocalSearch.h>
 #include <MSPRandomSolution.h>
 #include <MSPSimulatedAnnealing.h>
 #include <MSPStopCondition.h>
@@ -11,6 +10,7 @@
 #include <iostream>
 #include <LocalSearch.h>
 #include <FirstImprovement.h>
+#include <BestImprovement.h>
 using namespace std;
 extern unsigned int numSeeds;
 extern unsigned int seeds[];
@@ -78,7 +78,7 @@ void runSimulatedAnnealing(vector<double> &currentResults,
 	}
 }
 
-void runFirstImprovement(vector<double> &currentResults,
+void runLS(vector<double> &currentResults,
 		vector<double> &bestSoFarResults, MSPInstance &instance,
 		MSPNeighbourExplorer &explorer) {
 
@@ -211,8 +211,10 @@ int main(int argc, char** argv) {
 //	runGrasp(*current, *best, instance);
 
 //	runSimulatedAnnealing(*current, *best, instance);
-	FirstImprovement firstExplorer;
-	runFirstImprovement(*current, *best, instance, firstExplorer);
+//	FirstImprovement firstExplorer;
+
+	BestImprovement bestExplorer;
+	runLS(*current, *best, instance, bestExplorer);
 
 //
 	for(unsigned i=0; i < current->size(); i++){
