@@ -52,8 +52,8 @@ void runSimulatedAnnealing(vector<double> &currentResults,
 	MSPSimulatedAnnealing sa;
 	MSPStopCondition stopCond;
 	MSPEvaluator::resetNumEvaluations();
-	sa.initialise(0.9, 10, 0.8000, 50, instance);
-	stopCond.setConditions(100000, 0, 5);
+	sa.initialise(0.9, 10, 0.85, 50, instance);
+	stopCond.setConditions(MAX_SOLUTIONS_PER_RUN, 0, MAX_SECONS_PER_RUN);
 
 	//Generate a first random solution
 	MSPRandomSolution::genRandomSol(instance, initialSolution);
@@ -273,49 +273,49 @@ int main(int argc, char** argv) {
 	vector<double> *current = new vector<double>();
 	vector<double> *best = new vector<double>();
 
-	MSPInstance instance;
-	instance.readInstance(argv[1]);
+	MSPInstance *instance = new MSPInstance();
+	instance->readInstance(argv[1]);
 
 	switch (opcion) {
 		case 1:{
-			runRandomFunction(*current, *best, instance);
+			runRandomFunction(*current, *best, *instance);
 		}
 		break;
 
 		case 2:{
 			FirstImprovement firstExplorer;
-			runLS(*current, *best, instance, firstExplorer);
+			runLS(*current, *best, *instance, firstExplorer);
 		}
 		break;
 
 		case 3:{
 			BestImprovement bestExplorer;
-			runLS(*current, *best, instance, bestExplorer);
+			runLS(*current, *best, *instance, bestExplorer);
 		}
 		break;
 
 		case 4:{
-			runSimulatedAnnealing(*current, *best, instance);
+			runSimulatedAnnealing(*current, *best, *instance);
 		}
 		break;
 
 		case 5:{
-			runTabuSearch(*current, *best, instance);
+			runTabuSearch(*current, *best, *instance);
 		}
 		break;
 
 		case 6:{
-			runIteratedGreedy(*current, *best, instance);
+			runIteratedGreedy(*current, *best, *instance);
 		}
 		break;
 
 		case 7:{
-			runGrasp(*current, *best, instance);
+			runGrasp(*current, *best, *instance);
 		}
 		break;
 
 		case 8:{
-			runGeneticAlgorithm(*current, *best, instance);
+			runGeneticAlgorithm(*current, *best, *instance);
 		}
 		break;
 

@@ -23,6 +23,7 @@ void MSPInstance::readInstance(char* fileName){
 	std::ifstream file(fileName);
 
 	if(!file.is_open()){
+		std::cout << fileName << std::endl;
 		std::cout << "That instance file does not exist" << std::endl;
 		exit(-1);
 	}
