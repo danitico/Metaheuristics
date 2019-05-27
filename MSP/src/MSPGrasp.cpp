@@ -13,7 +13,7 @@ void MSPGrasp::chooseOperation(MSPBooleanChangeOperation& operation) {
 	unsigned numLiterals = _instance->getNumberOfLiterals();
 
 
-	for (unsigned i = 0; i < numLiterals; i++) {
+	for (unsigned i = 1; i <=numLiterals; i++) {
 
 		int indexLiteral = i;
         if(!_sol->isTrue(i)){

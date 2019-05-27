@@ -55,7 +55,7 @@ void MSPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 	 *      then you should decrease the temperature
 	 */
 	while (stopCondition.reached()==false){
-		int indexLiteral = rand() % numObjs;
+		int indexLiteral = (rand() % (numObjs-1))+1;
 		bool oldValue=_solution->isTrue(indexLiteral);
 
 		double deltaFitness =_instance->getDeltaFitness(*_solution,indexLiteral);

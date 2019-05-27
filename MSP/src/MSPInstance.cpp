@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <cassert>
 #include <iostream>
 #include <cstdlib>
 #include <MSPSolution.h>
@@ -63,10 +64,10 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 
 	perm.clear();
 
-	for (int i = 1; i <= getNumberOfLiterals(); i++)
-		perm.push_back(i);
-
 	for (int i = 1; i <= getNumberOfLiterals(); i++){
+		perm.push_back(i);
+	}
+	for (unsigned int i = 1; i < perm.size(); i++){
 		int pos = rand() % getNumberOfLiterals();
 		int aux = perm[i];
 		perm[i] = perm[pos];
@@ -75,6 +76,8 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 }
 
 double MSPInstance::getDeltaFitness(MSPSolution &solucion, int pos){
+
+	assert(nLiterals_+1>pos&&pos>0);
 	double fitnessDifference=0.0;
 
 	MSPSolution *a = new MSPSolution(solucion);

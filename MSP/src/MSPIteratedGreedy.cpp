@@ -27,7 +27,7 @@ void MSPIteratedGreedy::chooseOperation(
 	 *     Store the assignment as the best if it is the one resulting in the highest density
 	 */
 
-	for (unsigned i = 0; i < numLiterals; i++) {
+	for (unsigned i = 1; i <= numLiterals; i++) {
 
 		int indexLiteral = i;
         if(!_sol->isTrue(i)){
