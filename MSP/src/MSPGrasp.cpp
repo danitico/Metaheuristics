@@ -15,8 +15,8 @@ void MSPGrasp::chooseOperation(MSPBooleanChangeOperation& operation) {
 
 	for (unsigned i = 1; i <=numLiterals; i++) {
 
-		int indexLiteral = i;
-        if(!_sol->isTrue(i)){
+		int indexLiteral = rand()%(numLiterals+1);
+		        if(!_sol->isTrue(indexLiteral)&&indexLiteral>0){
 			//Obtain delta fitness
 			double deltaFitness = MSPEvaluator::computeDeltaFitness(*_instance, *_sol, indexLiteral);
 			//update the best values if they are improved
