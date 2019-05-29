@@ -13,8 +13,8 @@
 using namespace std;
 extern unsigned int numSeeds;
 extern unsigned int seeds[];
-#define MAX_SECONS_PER_RUN 5
-#define MAX_SOLUTIONS_PER_RUN 100000
+#define MAX_SECONS_PER_RUN 500
+#define MAX_SOLUTIONS_PER_RUN 1000000
 #define MAX_INITIAL_SOLUTIONS 5
 
 void runRandomFunction(vector<double> &currentResults,
