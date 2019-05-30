@@ -27,6 +27,3 @@ double MSPEvaluator::computeDeltaFitness(MSPInstance& instance,
 void MSPEvaluator::resetNumEvaluations() {
 	_numEvaluations = 0;
 }
-
-
-

@@ -9,15 +9,15 @@ using namespace std;
 
 class Timer {
 private:
-  struct rusage res;
-  struct timeval tp;
-  double virtual_time, real_time;
+	struct rusage res;
+	struct timeval tp;
+	double virtual_time, real_time;
 
 public:
-  enum TYPE {REAL, VIRTUAL};
-  Timer(void);
-  double elapsed_time(const TYPE& type);
+	enum TYPE {REAL, VIRTUAL};
+	Timer(void);
+	double elapsed_time(const TYPE& type);
 
-  void reset();
+	void reset();
 };
 #endif

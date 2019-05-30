@@ -10,41 +10,41 @@
 class MSPSimulatedAnnealing : public MSPMetaheuristic{
 private:
 	double _T;
-		double _initialProb;
-		double _annealingFactor;
-		unsigned _itsPerAnnealing;
-		MSPSolution *_solution;
-		MSPSolution *_bestSolution;
-		MSPInstance *_instance;
-		std::vector<double> _results;
-		bool accept(double deltafitness);
-		void initialize(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
+	double _initialProb;
+	double _annealingFactor;
+	unsigned _itsPerAnnealing;
+	MSPSolution *_solution;
+	MSPSolution *_bestSolution;
+	MSPInstance *_instance;
+	std::vector<double> _results;
+	bool accept(double deltafitness);
+	void initialize(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
 public:
 
-			MSPSimulatedAnnealing(){
-				_T = 0;
-				_initialProb = 0;
-				_annealingFactor = 0;
-				_itsPerAnnealing = 0;
-				_solution = NULL;
-				_instance = NULL;
-				_bestSolution=NULL;
-			}
+	MSPSimulatedAnnealing(){
+		_T = 0;
+		_initialProb = 0;
+		_annealingFactor = 0;
+		_itsPerAnnealing = 0;
+		_solution = NULL;
+		_instance = NULL;
+		_bestSolution=NULL;
+	}
 
 
-			virtual ~MSPSimulatedAnnealing(){
+	virtual ~MSPSimulatedAnnealing(){
 
-				if (_bestSolution != NULL){
-					delete _bestSolution;
-					_bestSolution = NULL;
-				}
-			};
-			void setSolution(MSPSolution* solution);
-			virtual void run(MSPStopCondition &stopCondition);
-			void initialise(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
-			std::vector<double>& getResults() {
-					return _results;
-				}/**/
+		if (_bestSolution != NULL){
+			delete _bestSolution;
+			_bestSolution = NULL;
+		}
+	};
+	void setSolution(MSPSolution* solution);
+	virtual void run(MSPStopCondition &stopCondition);
+	void initialise(double initialProb, int numInitialEstimates, double annealingFactor, unsigned itsPerAnnealing, MSPInstance &instance);
+	std::vector<double>& getResults() {
+		return _results;
+	}/**/
 };
 
 #endif /* SRC_INCLUDE_MSPSOLUTION_H_ */

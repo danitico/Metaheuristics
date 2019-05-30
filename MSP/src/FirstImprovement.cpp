@@ -18,6 +18,6 @@ bool FirstImprovement::findOperation(MSPInstance& instance,MSPSolution& solution
 	}
 
 
-		
+
 	return false;
 }

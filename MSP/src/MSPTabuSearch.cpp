@@ -112,5 +112,3 @@ void MSPTabuSearch::run(MSPStopCondition& stopCondition) {
 		stopCondition.notifyIteration();
 	}
 }
-
-

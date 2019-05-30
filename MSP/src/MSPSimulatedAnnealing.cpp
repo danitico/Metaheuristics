@@ -61,8 +61,8 @@ void MSPSimulatedAnnealing::run(MSPStopCondition& stopCondition) {
 		double deltaFitness =_instance->getDeltaFitness(*_solution,indexLiteral);
 		if (this->accept(deltaFitness) == true){
 			if(oldValue==false){
-			_solution->setBool(indexLiteral, true);
-			_solution->setFitness(_solution->getFitness() + deltaFitness);
+				_solution->setBool(indexLiteral, true);
+				_solution->setFitness(_solution->getFitness() + deltaFitness);
 			}
 			if(oldValue==true)
 			{

@@ -27,11 +27,11 @@ MSPSolution::~MSPSolution() {
 	// Auto-generated destructor stub
 }
 
- void MSPSolution::setBool(int i,bool v){
-	 solution_[i]=v;
- }
+void MSPSolution::setBool(int i,bool v){
+	solution_[i]=v;
+}
 
- bool MSPSolution::isTrue(int pos) const{
+bool MSPSolution::isTrue(int pos) const{
 	return solution_[pos];
 }
 void MSPSolution::copy(MSPSolution &solution) {
@@ -39,4 +39,4 @@ void MSPSolution::copy(MSPSolution &solution) {
 		solution_[i] = solution.solution_[i];
 
 	fitness_ = solution.fitness_;
-  }
+}

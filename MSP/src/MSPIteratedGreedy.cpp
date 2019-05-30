@@ -30,7 +30,7 @@ void MSPIteratedGreedy::chooseOperation(
 	for (unsigned i = 1; i <= numLiterals; i++) {
 
 		int indexLiteral = i;
-        if(!_sol->isTrue(i)){
+		if(!_sol->isTrue(i)){
 			//Obtain delta fitness and density (deltaFitness divided by weight)
 			double deltaFitness = MSPEvaluator::computeDeltaFitness(*_instance, *_sol, indexLiteral);
 			//update the best values if they are improved
@@ -39,7 +39,7 @@ void MSPIteratedGreedy::chooseOperation(
 				bestLiteral = indexLiteral;
 				bestDeltaFitness = deltaFitness;
 			}
-        }
+		}
 	}
 
 	operation.setValues(bestLiteral, bestDeltaFitness);

@@ -7,7 +7,7 @@
 
 class MSPCrossoverOperator
 {
-	protected:
+protected:
 	/**
 	 * Properties of the class:
 	 *  - _instance Instance of the problem considered. It is used only for creating new objects MQKPSolution
@@ -69,13 +69,13 @@ public:
 	}
 	void cross(std::vector<MSPSolution*> &parents, std::vector<MSPSolution*> &offspring) {
 
-			unsigned numParents = (unsigned) parents.size();
+		unsigned numParents = (unsigned) parents.size();
 
-			//Apply crossover considering every two consecutive pairs (1,2), (3,4)...
-			for (unsigned i=0; i < numParents; i+=2) {
-				MSPSolution *sol = cross(parents[i], parents[i+1]);
-				offspring.push_back(sol);
-			}
+		//Apply crossover considering every two consecutive pairs (1,2), (3,4)...
+		for (unsigned i=0; i < numParents; i+=2) {
+			MSPSolution *sol = cross(parents[i], parents[i+1]);
+			offspring.push_back(sol);
+		}
 	}	
 };
 

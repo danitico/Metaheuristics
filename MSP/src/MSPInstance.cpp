@@ -29,25 +29,25 @@ void MSPInstance::readInstance(char* fileName){
 		exit(-1);
 	}
 
-    char aux;
-    file>>aux;
-    std::string dummie;
+	char aux;
+	file>>aux;
+	std::string dummie;
 
-    while(aux!='p'){
-      	getline(file, dummie, '\n');
-      	file>>aux;
-    }
-    file>>dummie>>nLiterals_>>nClauses_;
-    int newLiteral;
-    Clause newclause;
-    while(file>>newLiteral){
-    	if(newLiteral==0){
-    		instancesVector_.push_back(newclause);
-    		newclause.clean();
-    	}
-    	else newclause.addLiteral(newLiteral);
-    }
-    if(newclause.size()!=0) instancesVector_.push_back(newclause);
+	while(aux!='p'){
+		getline(file, dummie, '\n');
+		file>>aux;
+	}
+	file>>dummie>>nLiterals_>>nClauses_;
+	int newLiteral;
+	Clause newclause;
+	while(file>>newLiteral){
+		if(newLiteral==0){
+			instancesVector_.push_back(newclause);
+			newclause.clean();
+		}
+		else newclause.addLiteral(newLiteral);
+	}
+	if(newclause.size()!=0) instancesVector_.push_back(newclause);
 
 }
 
@@ -84,7 +84,7 @@ double MSPInstance::getDeltaFitness(MSPSolution &solucion, int pos){
 
 	bool oldValue=a->isTrue(pos);
 	double fit=a->getFitness();
-//	std::cout << fit << std::endl;
+	//	std::cout << fit << std::endl;
 	if(oldValue==false)
 	{
 		a->setBool(pos,true);

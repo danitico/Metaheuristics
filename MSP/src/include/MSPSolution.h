@@ -26,7 +26,7 @@ public:
 	double getFitness(){return fitness_;}
 	void copy(MSPSolution &solution);
 	bool hasValidFitness(){
-			return _fitnessAssigned;
+		return _fitnessAssigned;
 	}
 };
 

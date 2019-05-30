@@ -10,7 +10,7 @@
 #include <MSPChangeOperation.h>
 #include <MSPSolution.h>
 class MSPBooleanChangeOperation: public MSPChangeOperation{
-	protected:
+protected:
 	/*
 	 * Properties of this class
 	 */

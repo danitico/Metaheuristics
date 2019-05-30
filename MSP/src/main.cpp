@@ -37,12 +37,12 @@ void runRandomFunction(vector<double> &currentResults,
 			&& MSPEvaluator::getNumEvaluations() < MAX_SOLUTIONS_PER_RUN){
 
 		srand(seeds[r]);seeds[r]+=rand()%100; r=(r+1)%numSeeds;
-    	MSPRandomSolution::genRandomSol(instance, solution);
-    	double currentsol=MSPEvaluator::computeFitness(instance, solution);
+		MSPRandomSolution::genRandomSol(instance, solution);
+		double currentsol=MSPEvaluator::computeFitness(instance, solution);
 
 		currentResults.push_back(currentsol);
 		bestSoFarResults.push_back(max(bestSoFarResults.back(), currentsol));
-    }
+	}
 }
 void runSimulatedAnnealing(vector<double> &currentResults,
 		vector<double> &bestSoFarResults, MSPInstance &instance) {
@@ -277,51 +277,51 @@ int main(int argc, char** argv) {
 	instance->readInstance(argv[1]);
 
 	switch (opcion) {
-		case 1:{
-			runRandomFunction(*current, *best, *instance);
-		}
-		break;
+	case 1:{
+		runRandomFunction(*current, *best, *instance);
+	}
+	break;
 
-		case 2:{
-			FirstImprovement firstExplorer;
-			runLS(*current, *best, *instance, firstExplorer);
-		}
-		break;
+	case 2:{
+		FirstImprovement firstExplorer;
+		runLS(*current, *best, *instance, firstExplorer);
+	}
+	break;
 
-		case 3:{
-			BestImprovement bestExplorer;
-			runLS(*current, *best, *instance, bestExplorer);
-		}
-		break;
+	case 3:{
+		BestImprovement bestExplorer;
+		runLS(*current, *best, *instance, bestExplorer);
+	}
+	break;
 
-		case 4:{
-			runSimulatedAnnealing(*current, *best, *instance);
-		}
-		break;
+	case 4:{
+		runSimulatedAnnealing(*current, *best, *instance);
+	}
+	break;
 
-		case 5:{
-			runTabuSearch(*current, *best, *instance);
-		}
-		break;
+	case 5:{
+		runTabuSearch(*current, *best, *instance);
+	}
+	break;
 
-		case 6:{
-			runIteratedGreedy(*current, *best, *instance);
-		}
-		break;
+	case 6:{
+		runIteratedGreedy(*current, *best, *instance);
+	}
+	break;
 
-		case 7:{
-			runGrasp(*current, *best, *instance);
-		}
-		break;
+	case 7:{
+		runGrasp(*current, *best, *instance);
+	}
+	break;
 
-		case 8:{
-			runGeneticAlgorithm(*current, *best, *instance);
-		}
-		break;
+	case 8:{
+		runGeneticAlgorithm(*current, *best, *instance);
+	}
+	break;
 
-		default:
-			std::cout << BIRED << "That algorithm does not exist" << RESET << std::endl;
-			return 0;
+	default:
+		std::cout << BIRED << "That algorithm does not exist" << RESET << std::endl;
+		return 0;
 	}
 
 	for(unsigned i=0; i < current->size(); i++){
