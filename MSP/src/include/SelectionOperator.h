@@ -15,7 +15,7 @@ using namespace std;
 class SelectionOperator {
 public:
 
-	virtual ~SelectionOperator();
+	virtual ~SelectionOperator(){};
 	virtual void select(vector<MSPSolution*> &orig, vector<MSPSolution*> &result) = 0;
 };
 

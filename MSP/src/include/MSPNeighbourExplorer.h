@@ -7,13 +7,13 @@
 
 #ifndef MSPNEIGHBOUREXPLORER_H_
 #define MSPNEIGHBOUREXPLORER_H_
-#include <MSPChangeOperation.h>
 #include <MSPInstance.h>
+#include <MSPBooleanChangeOperation.h>
 
 class MSPNeighbourExplorer {
 public:
-//	virtual ~MSPNeighbourExplorer() = 0;
-	virtual bool findOperation(MSPInstance &instance, MSPSolution &solution, MSPChangeOperation &operation) = 0;
+	virtual ~MSPNeighbourExplorer() {};
+	virtual bool findOperation(MSPInstance &instance, MSPSolution &solution, MSPBooleanChangeOperation &operation) = 0;
 };
 
 #endif /* MSPNEIGHBOUREXPLORER_H_ */

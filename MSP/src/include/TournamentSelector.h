@@ -34,17 +34,10 @@ protected:
 	 * @result Solution selected
 	 */
 	MSPSolution* selectOne (vector<MSPSolution*> &set){
-
-		/**
-		 *
-		 * 1. Select randomly a solution as the current winner
-		 *
-		 * 2. Repeat (_k-1) times: select randomly another solutions and make a tournament with the current winner (keep the best one)
-		 */
 		MSPSolution* best=set[rand()%set.size()];
 		for(unsigned i=0;i<_k-1;i++){
 			MSPSolution* aux=set[rand()%set.size()];
-			if(aux->getFitness()>best->getFitness()){
+			if(MSPEvaluator::compare(aux->getFitness(), best->getFitness()) > 0){
 				best=aux;
 			}
 		}
@@ -64,7 +57,7 @@ public:
 	/**
 	 * Destructor
 	 */
-	virtual ~TournamentSelector(){}
+	~TournamentSelector(){}
 
 	/**
 	 * Function which select as many pairs of parents from a vector as the number of elements

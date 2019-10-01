@@ -15,16 +15,23 @@ MSPSolution::MSPSolution(int numberOfLiterals) {
 
 }
 
+MSPSolution::MSPSolution(const MSPSolution &copy){
+	solution_ = copy.solution_;
+	numlits_=copy.numlits_;
+	fitness_=copy.fitness_;
+	_fitnessAssigned = copy._fitnessAssigned;
+}
+
 MSPSolution::~MSPSolution() {
 	solution_.resize(0);
 	// Auto-generated destructor stub
 }
 
- void MSPSolution::setBool(int i,bool v){
-	 solution_[i]=v;
- }
+void MSPSolution::setBool(int i,bool v){
+	solution_[i]=v;
+}
 
- bool MSPSolution::isTrue(int pos) const{
+bool MSPSolution::isTrue(int pos) const{
 	return solution_[pos];
 }
 void MSPSolution::copy(MSPSolution &solution) {
@@ -32,4 +39,4 @@ void MSPSolution::copy(MSPSolution &solution) {
 		solution_[i] = solution.solution_[i];
 
 	fitness_ = solution.fitness_;
-  }
+}

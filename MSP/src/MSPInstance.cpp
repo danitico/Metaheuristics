@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <cassert>
 #include <iostream>
 #include <cstdlib>
 #include <MSPSolution.h>
@@ -21,25 +22,32 @@ MSPInstance::~MSPInstance()
 
 void MSPInstance::readInstance(char* fileName){
 	std::ifstream file(fileName);
-    char aux;
-    file>>aux;
-    std::string dummie;
 
-    while(aux!='p'){
-      	getline(file, dummie, '\n');
-      	file>>aux;
-    }
-    file>>dummie>>nLiterals_>>nClauses_;
-    int newLiteral;
-    Clause newclause;
-    while(file>>newLiteral){
-    	if(newLiteral==0){
-    		instancesVector_.push_back(newclause);
-    		newclause.clean();
-    	}
-    	else newclause.addLiteral(newLiteral);
-    }
-    if(newclause.size()!=0) instancesVector_.push_back(newclause);
+	if(!file.is_open()){
+		std::cout << fileName << std::endl;
+		std::cout << "That instance file does not exist" << std::endl;
+		exit(-1);
+	}
+
+	char aux;
+	file>>aux;
+	std::string dummie;
+
+	while(aux!='p'){
+		getline(file, dummie, '\n');
+		file>>aux;
+	}
+	file>>dummie>>nLiterals_>>nClauses_;
+	int newLiteral;
+	Clause newclause;
+	while(file>>newLiteral){
+		if(newLiteral==0){
+			instancesVector_.push_back(newclause);
+			newclause.clean();
+		}
+		else newclause.addLiteral(newLiteral);
+	}
+	if(newclause.size()!=0) instancesVector_.push_back(newclause);
 
 }
 
@@ -56,10 +64,10 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 
 	perm.clear();
 
-	for (int i = 1; i <= getNumberOfLiterals(); i++)
-		perm.push_back(i);
-
 	for (int i = 1; i <= getNumberOfLiterals(); i++){
+		perm.push_back(i);
+	}
+	for (unsigned int i = 1; i < perm.size(); i++){
 		int pos = rand() % getNumberOfLiterals();
 		int aux = perm[i];
 		perm[i] = perm[pos];
@@ -67,42 +75,29 @@ void MSPInstance::randomPermutationOfLiterals(std::vector<int>& perm) {
 	}
 }
 
-double MSPInstance::getDeltaFitness( const MSPSolution &solucion, int pos){
-	double fitnessDiference=0.0;
-	if(!solucion.isTrue(pos)){
-		for(int i=0;i<nClauses_;i++){
-			/*If the clause has the new boolean value and that clause used to be not fulfilled, now it is*/
-			if(instancesVector_[i].has(-pos)){
-				if(!instancesVector_[i].isTrue(solucion)){
-					fitnessDiference++;
-				}
-			}
-			/*If the clause has the old boolean value it can change to be not fulfilled*/
-			if(instancesVector_[i].has(pos)){
-				if(!instancesVector_[i].isTrue(solucion)){
-					fitnessDiference--;
-				}
-			}
-		}
-	}
-	else{
-			for(int i=0;i<nClauses_;i++){
-				/*If the clause has the new boolean value and that clause used to be not fulfilled, now it is*/
-				if(instancesVector_[i].has(pos)){
-					if(!instancesVector_[i].isTrue(solucion)){
-						fitnessDiference++;
-					}
-				}
-				/*If the clause has the old boolean value it can change to be not fulfilled*/
-				if(instancesVector_[i].has(-pos)){
-					if(!instancesVector_[i].isTrue(solucion)){
-						fitnessDiference--;
-					}
-				}
-			}
-		}
+double MSPInstance::getDeltaFitness(MSPSolution &solucion, int pos){
 
-	return fitnessDiference;
+	assert(nLiterals_+1>pos&&pos>0);
+	double fitnessDifference=0.0;
+
+	MSPSolution *a = new MSPSolution(solucion);
+
+	bool oldValue=a->isTrue(pos);
+	double fit=a->getFitness();
+	//	std::cout << fit << std::endl;
+	if(oldValue==false)
+	{
+		a->setBool(pos,true);
+		double newFit=computeFitness(*a);
+		fitnessDifference=newFit-fit;
+	}
+	else
+	{
+		a->setBool(pos,false);
+		double newFit=computeFitness(*a);
+		fitnessDifference=newFit-fit;
+	}
+	return fitnessDifference;
 }
 
 

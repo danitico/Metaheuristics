@@ -61,6 +61,7 @@ void MSPTabuSearch::run(MSPStopCondition& stopCondition) {
 
 		vector<int> perm;
 		_instance->randomPermutationOfLiterals(perm);
+		//for(unsigned xddd=0;xddd<perm.size();xddd++) std::cout<<perm[xddd]<<std::endl;
 		double bestDeltaFitness = 0;
 		bool initialisedDeltaFitness = false;
 		MSPBooleanChangeOperation bestOperation;
@@ -111,5 +112,3 @@ void MSPTabuSearch::run(MSPStopCondition& stopCondition) {
 		stopCondition.notifyIteration();
 	}
 }
-
-

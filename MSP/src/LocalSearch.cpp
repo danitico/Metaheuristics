@@ -13,13 +13,18 @@ LocalSearch::LocalSearch() {
 }
 
 LocalSearch::~LocalSearch() {
-	// TODO Auto-generated destructor stub
+	// TODO Auto-generated destructdor stub
 }
 
 void LocalSearch::optimise(MSPInstance &instance, MSPNeighbourExplorer &explorer, MSPSolution &solution){
 	_results.clear();
 	_results.push_back(solution.getFitness());
-	MSPChangeOperation operation;
+	MSPBooleanChangeOperation operation;
+
+	explorer.findOperation(instance, solution, operation);
+
+	operation.apply(solution);
+	_results.push_back(solution.getFitness());
 
 	while(explorer.findOperation(instance, solution, operation)){
 		operation.apply(solution);

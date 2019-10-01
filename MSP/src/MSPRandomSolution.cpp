@@ -9,9 +9,9 @@
 
 
 void MSPRandomSolution::genRandomSol(MSPInstance &instance, MSPSolution &solution){
-    int numLiterals=instance.getNumberOfLiterals();
+	int numLiterals=instance.getNumberOfLiterals();
 	for (int i = 1; i < numLiterals+1; i++){
-		bool randomSolution = (rand() % 2)==0;
+		bool randomSolution = (rand() % 2);
 		solution.setBool(i,randomSolution);
 	}
 }

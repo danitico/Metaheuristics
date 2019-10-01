@@ -1,6 +1,7 @@
 #ifndef INCLUDE_MQKPSTOPCONDITION_H_
 #define INCLUDE_MQKPSTOPCONDITION_H_
 
+#include <iostream>
 
 #include <Timer.h>
 #include <MSPInstance.h>
@@ -32,14 +33,18 @@ public:
 	virtual bool reached(){
 		bool result = false;
 
-		if (_maxEvaluations > 0 && MSPEvaluator::getNumEvaluations() >= _maxEvaluations)
+		if (_maxEvaluations > 0 && MSPEvaluator::getNumEvaluations() >= _maxEvaluations){
 			result = true;
+		}
 
-		if (_maxIterations > 0 && _numIterations >= _maxIterations)
+		if (_maxIterations > 0 && _numIterations >= _maxIterations){
 			result = true;
+		}
 
-		if (_maxTime > 0 && _time.elapsed_time(Timer::VIRTUAL) >= _maxTime)
+
+		if (_maxTime > 0 && _time.elapsed_time(Timer::VIRTUAL) >= _maxTime){
 			result = true;
+		}
 
 		return result;
 	}

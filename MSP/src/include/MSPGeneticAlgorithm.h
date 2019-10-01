@@ -1,10 +1,3 @@
-/*
- * MSPGeneticAlgorithm.h
- *
- *  Created on: 15 may. 2019
- *      Author: chema969
- */
-
 #ifndef INCLUDE_MSPGENETICALGORITHM_H_
 #define INCLUDE_MSPGENETICALGORITHM_H_
 
@@ -61,11 +54,11 @@ protected:
 	unsigned indexBest(vector<MSPSolution*> &set) {
 
 		//Search for the index of the best solution in set
-		unsigned indexBestOne=0;
+		unsigned indexBestOne = 0;
 		double bestFitness = set[0]->getFitness();
 
-		for(unsigned i=1; i<set.size(); i++){
-			if(set[i]->getFitness() > bestFitness){
+		for (unsigned i = 1; i < set.size(); i++) {
+			if (set[i]->getFitness() > bestFitness) {
 				bestFitness = set[i]->getFitness();
 				indexBestOne = i;
 			}
@@ -82,12 +75,12 @@ protected:
 	unsigned indexWorst(vector<MSPSolution*> &set) {
 
 		// Search for the index of the worst solution in set
-		unsigned indexWorst=0;
+		unsigned indexWorst = 0;
 		double worstFitness = set[0]->getFitness();
-		for(unsigned i=1;i<set.size();i++){
-			if(set[i]->getFitness() < worstFitness){
+		for (unsigned i = 1; i < set.size(); i++) {
+			if (set[i]->getFitness() < worstFitness) {
 				worstFitness = set[i]->getFitness();
-				indexWorst=i;
+				indexWorst = i;
 			}
 		}
 
@@ -117,7 +110,8 @@ protected:
 		unsigned int indexBestPop = indexBest(_population);
 		unsigned int indexBestOff = indexBest(offspring);
 
-		if(_population[indexBestPop]->getFitness() > offspring[indexBestOff]->getFitness()){
+		if (_population[indexBestPop]->getFitness()
+				> offspring[indexBestOff]->getFitness()) {
 			unsigned worst = indexWorst(offspring);
 			offspring[worst]->copy(*_population[indexBestPop]);
 		}
@@ -151,17 +145,17 @@ protected:
 			 *
 			 * A new functionality has been included in Solution to detect if its fitness was previously calculated.
 			 * which is useful when the descendant is a copy of the parent.
-             * In this way, only those solutions which has an invalid fitness will be evaluated
+			 * In this way, only those solutions which has an invalid fitness will be evaluated
 			 */
 			if (!(s->hasValidFitness())) {
 
-				double fitness= MSPEvaluator::computeFitness(*_instance, *s);
+				double fitness = MSPEvaluator::computeFitness(*_instance, *s);
 
 				_results.push_back(fitness);
 				s->setFitness(fitness);
 
-
-				if (MSPEvaluator::compare(fitness, _bestSolution->getFitness()) > 0){
+				if (MSPEvaluator::compare(fitness, _bestSolution->getFitness())
+				> 0) {
 					_bestSolution->copy(*s);
 				}
 			}
@@ -176,8 +170,8 @@ protected:
 
 		if (_instance == NULL) {
 			cerr
-					<< "The evolutionary algorithm has not been initialised. At least, its _instance is NULL"
-					<< endl;
+			<< "The evolutionary algorithm has not been initialised. At least, its _instance is NULL"
+			<< endl;
 			exit(1);
 		}
 
@@ -190,9 +184,17 @@ protected:
 		 *  4. Include the solution in the population (done)
 		 */
 		for (unsigned i = 0; i < popSize; i++) {
-			MSPSolution *sol = new MSPSolution(*_instance);
+			MSPSolution *sol = new MSPSolution(
+					_instance->getNumberOfLiterals());
 			MSPRandomSolution::genRandomSol(*_instance, *sol);
 			double fitness = MSPEvaluator::computeFitness(*_instance, *sol);
+
+			sol->setFitness(fitness);
+			if (MSPEvaluator::compare(sol->getFitness(),
+					_bestSolution->getFitness()) > 0) {
+				_bestSolution->copy(*sol);
+			}
+
 			_results.push_back(fitness);
 			_population.push_back(sol);
 		}
@@ -236,7 +238,7 @@ public:
 			_population.pop_back();
 		}
 
-		if (_bestSolution != NULL){
+		if (_bestSolution != NULL) {
 			delete _bestSolution;
 			_bestSolution = NULL;
 		}
@@ -263,27 +265,27 @@ public:
 		 */
 
 		initPopulation(this->_popSize);
-				while (stopCondition.reached() == false) {
+		while (stopCondition.reached() == false) {
 
-					_popMeanResults.push_back(computeMeanFitness(_population));
-					_bestPerIterations.push_back(
-							_population.at(indexBest(_population))->getFitness());
+			_popMeanResults.push_back(computeMeanFitness(_population));
+			_bestPerIterations.push_back(
+					_population.at(indexBest(_population))->getFitness());
 
-					vector<MSPSolution*> parents;
-					_selector->select(_population,parents); // Selection of parents
+			vector<MSPSolution*> parents;
+			_selector->select(_population, parents); // Selection of parents
 
-					vector<MSPSolution*> offspring;
-					_crossoverOp->cross(parents, offspring); // Crossover
-					_mutOp->mutate(offspring);// Mutation
-					evaluate(offspring);// Evaluate
-					_offMeanResults.push_back(computeMeanFitness(offspring));
+			vector<MSPSolution*> offspring;
+			_crossoverOp->cross(parents, offspring); // Crossover
+			_mutOp->mutate(offspring); // Mutation
+			evaluate(offspring); // Evaluate
+			_offMeanResults.push_back(computeMeanFitness(offspring));
 
-					selectNewPopulation(offspring); // Selection of the offspring (replacement)
-					stopCondition.notifyIteration();
-				}
+			selectNewPopulation(offspring); // Selection of the offspring (replacement)
+			stopCondition.notifyIteration();
+		}
 
-				_popMeanResults.push_back(computeMeanFitness(_population));
-				_bestPerIterations.push_back(
+		_popMeanResults.push_back(computeMeanFitness(_population));
+		_bestPerIterations.push_back(
 				_population.at(indexBest(_population))->getFitness());
 	}
 
@@ -292,7 +294,7 @@ public:
 	 * @param[in] popSize Size of the population
 	 * @param[in] instance Instance of the problem to be considered
 	 */
-	void initialise(unsigned popSize, MSPSolution &instance) {
+	void initialise(unsigned popSize, MSPInstance &instance) {
 		_instance = &instance;
 
 		if (popSize <= 0) {
@@ -305,9 +307,10 @@ public:
 			_bestSolution = NULL;
 		}
 
-		_bestSolution = new MSPSolution(*_instance);
+		_bestSolution = new MSPSolution(_instance->getNumberOfLiterals());
 		MSPRandomSolution::genRandomSol(*_instance, *_bestSolution);
-		double fitness = MSPEvaluator::computeFitness(*_instance, *_bestSolution);
+		double fitness = MSPEvaluator::computeFitness(*_instance,
+				*_bestSolution);
 		_bestSolution->setFitness(fitness);
 
 		_popSize = popSize;
@@ -322,8 +325,8 @@ public:
 		}
 
 		if (_mutOp == NULL) {
-			_mutOp = new MSPMutationOperator((0.25 / _instance->getNumberOfLiterals()),
-					*_instance);
+			_mutOp = new MSPMutationOperator(
+					(0.25 / _instance->getNumberOfLiterals()), *_instance);
 		}
 
 		if (_selector == NULL) {
@@ -392,7 +395,5 @@ public:
 		return _bestPerIterations;
 	}
 };
-
-
 
 #endif /* INCLUDE_MSPGENETICALGORITHM_H_ */
